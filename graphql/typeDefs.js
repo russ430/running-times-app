@@ -24,8 +24,25 @@ module.exports = gql`
     createdAt: String!
     username: String!
   }
+  type User {
+    id: ID!
+    email: String!
+    token: String!
+    username: String!
+    createdAt: String!  
+  }
+  input RegisterInput {
+    username: String!
+    password: String!
+    confirmPassword: String!
+    email: String!
+  }
   type Query {
     getTimes: [Time]
     getTime(timeId: ID!): Time
+  }
+  type Mutation {
+    register(registerInput: RegisterInput): User!
+    postTime(time: String!, miles: String!, body: String!): Time!
   }
 `;

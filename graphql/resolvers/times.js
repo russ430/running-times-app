@@ -1,3 +1,5 @@
+const { UserInputError } = require('apollo-server')
+
 const Time = require('../../models/Time');
 
 module.exports = {
@@ -9,6 +11,37 @@ module.exports = {
       } catch(err) {
         throw new Error(err);
       }
+    },
+    async getTime(_, { timeId }) {
+      try {
+        const time = await Time.findById(timeId);
+        if(time){
+          return time;
+        } else {
+          throw new Error('Time not found')
+        }
+      } catch (err) {
+        throw new Error(err)
+      }
+    }
+  },
+  Mutation: {
+    async postTime(_, { time, miles, body }) {
+      
+      if (time.trim() === '' || miles.trim() === '') {
+        throw new Error('Time and miles must not be empty')
+      }
+      
+      const newTime = new Time({
+        time,
+        miles,
+        body,
+        createdAt: new Date().toISOString()
+      });
+
+      const postTime = await newTime.save();
+
+      return postTime;
     }
   }
 }
