@@ -1,4 +1,5 @@
-const { UserInputError } = require('apollo-server')
+const { UserInputError } = require('apollo-server');
+const checkAuth = require('../../util/checkAuth');
 
 const Time = require('../../models/Time');
 
@@ -26,13 +27,17 @@ module.exports = {
     }
   },
   Mutation: {
-    async postTime(_, { time, miles, body }) {
-      
+    async postTime(_, { time, miles, body }, context) {
+      const user = checkAuth(context);
+      console.log(user);
+
       if (time.trim() === '' || miles.trim() === '') {
         throw new Error('Time and miles must not be empty')
       }
       
       const newTime = new Time({
+        username: user.username,
+        user: user.id,
         time,
         miles,
         body,

@@ -43,6 +43,7 @@ module.exports = gql`
   }
   type Mutation {
     register(registerInput: RegisterInput): User!
+    login(username: String!, password: String!): User!
     postTime(time: String!, miles: String!, body: String!): Time!
   }
 `;
