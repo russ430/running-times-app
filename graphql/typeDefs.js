@@ -46,5 +46,7 @@ module.exports = gql`
     login(username: String!, password: String!): User!
     postTime(time: String!, miles: String!, body: String!): Time!
     deleteTime(timeId: String!): String!
+    postComment(timeId: String!, body: String!): Comment!
+    deleteComment(timeId: String!, commentId: String!): Time!
   }
 `;
