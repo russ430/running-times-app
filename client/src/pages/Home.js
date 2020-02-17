@@ -8,13 +8,9 @@ import TimeCard from '../components/TimeCard';
 function Home() {
   const { loading, data } = useQuery(FETCH_POSTS_QUERY);
 
-  if(data) {
-    console.log(data.getTimes);
-  }
-
   return (
     <Grid columns={3} divided>
-      <Grid.Row>
+      <Grid.Row className="page-title">
         <h1>Recent Times</h1>
       </Grid.Row>
       <Grid.Row>

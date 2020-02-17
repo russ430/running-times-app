@@ -43,9 +43,9 @@ module.exports = {
         token
       }
     },
-    async register(_, { registerInput: { username, email, password, confirmPassword }}) {
+    async register(_, { registerInput: { name, username, email, password, confirmPassword }}) {
       // Validate user data (make sure we don't have empty fields (password, email), passwords match)
-      const { valid, errors } = validateRegisterInput(username, email, password, confirmPassword);
+      const { valid, errors } = validateRegisterInput(name, username, email, password, confirmPassword);
       if(!valid) {
         throw new UserInputError('Errors', { errors });
       }
@@ -62,6 +62,7 @@ module.exports = {
       password = await bcrypt.hash(password, 12);
 
       const newUser = new User({
+        name,
         username,
         email,
         password,

@@ -4,6 +4,10 @@ const commentsResolvers = require('./comments');
 const likesResolvers = require('./likes');
 
 module.exports = {
+  Time: {
+    likeCount: (parent) => parent.likes.length,
+    commentCount: (parent) => parent.comments.length
+  },
   Query: {
     ...timesResolvers.Query
   },

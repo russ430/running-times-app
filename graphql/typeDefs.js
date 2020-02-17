@@ -11,7 +11,7 @@ module.exports = gql`
     comments: [Comment]!
     likes: [Like]!
     likeCount: Int!
-    commentsCount: Int!
+    commentCount: Int!
   }
   type Comment {
     id: ID!
@@ -26,12 +26,14 @@ module.exports = gql`
   }
   type User {
     id: ID!
+    name: String!
     email: String!
     token: String!
     username: String!
     createdAt: String!  
   }
   input RegisterInput {
+    name: String!
     username: String!
     password: String!
     confirmPassword: String!
