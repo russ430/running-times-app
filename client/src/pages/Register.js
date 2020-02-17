@@ -3,19 +3,20 @@ import { Form, Button } from 'semantic-ui-react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
+import { useForm } from '../util/hooks';
+
 function Register(props) {
   const [errors, setErrors] = useState({});
-  const [values, setValues] = useState({
+
+  const initialState = {
     name: '',
     username: '',
     password: '',
     confirmPassword: '',
     email: ''
-  });
-
-  const changedInputHandler = e => {
-    setValues({ ...values, [e.target.name]: e.target.value});
   }
+
+  const { changedInputHandler, onFormSubmitHandler, values } = useForm(registerUser, initialState)
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     // the second argument in useMutation is an options argument
@@ -24,7 +25,6 @@ function Register(props) {
     // the first argument for update is 'proxy' which contains metadata
     // the second argument is the result of the mutation
     update(proxy, result){
-      console.log(result);
       props.history.push('/')
     },
     onError(err){
@@ -33,15 +33,16 @@ function Register(props) {
       // therefore we only need to access the graphQLErrors array at index 0
       // the 'extensions' property will hold more properties including 'exceptions'
       // inside of 'extensions' we can access our errors object with all of our predefined server errors
-      console.log(err.graphQLErrors[0].extensions.exception.errors);
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
     // the third argument is the variables object that we will be sending with the mutation
     variables: values
   });
-
-  const onFormSubmitHandler = e => {
-    e.preventDefault();
+  
+  // all functions initialized with 'function' will be hoisted unlike functions
+  // initialized with 'const', therefore we can access the addUser() function
+  // before initialization
+  function registerUser() {
     addUser();
   }
 
