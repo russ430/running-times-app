@@ -48,5 +48,6 @@ module.exports = gql`
     deleteTime(timeId: String!): String!
     postComment(timeId: String!, body: String!): Comment!
     deleteComment(timeId: String!, commentId: String!): Time!
+    likeTime(timeId: ID!): Time!
   }
 `;
