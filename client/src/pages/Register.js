@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
+import { AuthContext } from '../context/auth';
 import { useForm } from '../util/hooks';
 
 function Register(props) {
+  const context = useContext(AuthContext)
   const [errors, setErrors] = useState({});
 
   const initialState = {
@@ -24,7 +26,8 @@ function Register(props) {
     // this will trigger if the mutation is successfully exexcuted
     // the first argument for update is 'proxy' which contains metadata
     // the second argument is the result of the mutation
-    update(proxy, result){
+    update(proxy, { data: { login: userData }}){
+      context.login(userData)
       props.history.push('/')
     },
     onError(err){

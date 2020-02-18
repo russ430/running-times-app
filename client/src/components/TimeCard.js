@@ -25,7 +25,7 @@ function TimeCard({ data: { id, body, miles, time, username, likeCount, likes, c
       <Card.Description>
         <p>Miles: {miles}</p>
         <p>Time: {time}</p>
-        <p>{body}</p>
+        <p style={{ fontSize: "1.5rem" }}>{body}</p>
       </Card.Description>
     </Card.Content>
     <Card.Content extra>
