@@ -47,7 +47,7 @@ module.exports = gql`
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!): User!
     postTime(time: String!, miles: String!, body: String!): Time!
-    deleteTime(timeId: String!): String!
+    deleteTime(timeId: ID!): String!
     postComment(timeId: String!, body: String!): Comment!
     deleteComment(timeId: String!, commentId: String!): Time!
     likeTime(timeId: ID!): Time!

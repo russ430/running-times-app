@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import MenuBar from './components/MenuBar';
+import SingleTime from './pages/SingleTime';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               back to the homepage if they somehow navigate to the login or register page. */}
           <AuthRoute exact path='/login' component={Login} />
           <AuthRoute exact path='/register' component={Register} />
+          <Route exact path="/times/:timeId" component={SingleTime } />
         </Container>
       </Router>
     </AuthProvider>

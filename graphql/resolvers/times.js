@@ -31,7 +31,7 @@ module.exports = {
       const user = checkAuth(context);
 
       if (time.trim() === '' || miles.trim() === '') {
-        throw new Error('Time and miles must not be empty')
+        throw new Error('Time and Mileage must not be empty')
       }
       
       const newTime = new Time({

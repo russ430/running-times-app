@@ -43,7 +43,8 @@ function PostForm() {
       });
       resetForm();
     },
-    variables: values
+    variables: values,
+    onError: (error) => null
   })
 
   function postTimeCallback() {
@@ -51,35 +52,46 @@ function PostForm() {
   }
 
   return (
-    <Form onSubmit={onFormSubmitHandler}>
-      <h2>Post a time:</h2>
-      <Form.Field>
-        <Form.Input
-          placeholder="MM:SS"
-          label="Time"
-          name="time"
-          onChange={changedInputHandler}
-          value={values.time}
-        />
-        <Form.Input
-          placeholder="26.2"
-          label="Mileage"
-          name="miles"
-          onChange={changedInputHandler}
-          value={values.miles}
-        />
-        <Form.Input
-          placeholder="Crushed it!"
-          label="How'd it go?"
-          name="body"
-          onChange={changedInputHandler}
-          value={values.body}
+    <>
+      <Form onSubmit={onFormSubmitHandler}>
+        <h2>Post a time:</h2>
+        <Form.Field>
+          <Form.Input
+            placeholder="MM:SS"
+            label="Time"
+            name="time"
+            error={error ? true : false}
+            onChange={changedInputHandler}
+            value={values.time}
           />
-        <Button type="submit" color="teal">
-          Submit
-        </Button>
-      </Form.Field>
-    </Form>
+          <Form.Input
+            placeholder="26.2"
+            label="Mileage"
+            name="miles"
+            error={error ? true : false}
+            onChange={changedInputHandler}
+            value={values.miles}
+          />
+          <Form.Input
+            placeholder="Crushed it!"
+            label="How'd it go?"
+            name="body"
+            onChange={changedInputHandler}
+            value={values.body}
+            />
+          <Button type="submit" color="teal">
+            Submit
+          </Button>
+        </Form.Field>
+      </Form>
+      {error && (
+        <div className="ui error message" style={{ marginBottom: '20px' }}>
+          <ul className="list">
+            <li>{error.graphQLErrors[0].message}</li>
+          </ul>
+        </div>
+      )}
+    </>
   )
 };
 

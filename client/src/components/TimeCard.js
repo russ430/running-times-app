@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Card, Icon, Label, Image, Button } from 'semantic-ui-react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
+import { AuthContext } from '../context/auth';
+import LikeButton from '../components/LikeButton';
+import DeleteButton from './DeleteButton';
+
 function TimeCard({ data: { id, body, miles, time, username, likeCount, likes, commentCount, createdAt }}) {
 
-  const likePost = () => {
-    console.log(`liked post`);
-  }
-  const commentOnPost = () => {
-    console.log(`commented on post`);
-  }
+  const { user } = useContext(AuthContext);
 
   return (
     <Card>
@@ -21,7 +20,7 @@ function TimeCard({ data: { id, body, miles, time, username, likeCount, likes, c
         src='https://react.semantic-ui.com/images/avatar/large/molly.png'
         />
       <Card.Header>{username}</Card.Header>
-      <Card.Meta as={Link} to={`/posts/${id}`}>{moment(createdAt).format("ddd, h:mm a")}</Card.Meta>
+      <Card.Meta as={Link} to={`/times/${id}`}>{moment(createdAt).format("ddd, h:mm a")}</Card.Meta>
       <Card.Description>
         <p>Miles: {miles}</p>
         <p>Time: {time}</p>
@@ -29,15 +28,9 @@ function TimeCard({ data: { id, body, miles, time, username, likeCount, likes, c
       </Card.Description>
     </Card.Content>
     <Card.Content extra>
-      <Button as='div' labelPosition='right' onClick={likePost}>
-        <Button color='teal' basic>
-          <Icon name='heart' />
-        </Button>
-        <Label basic color='teal' pointing='left'>
-          {likeCount}
-        </Label>
-      </Button>
-      <Button as='div' labelPosition='right' onClick={commentOnPost}>
+      {/* passing the required props needed to create a like button from the destructured props */}
+      <LikeButton user={user} time={{ id, likes, likeCount }} />
+      <Button labelPosition='right' as={Link} to={`/posts/${id}`}>
         <Button color='blue' basic>
           <Icon name='comments' />
         </Button>
@@ -45,6 +38,9 @@ function TimeCard({ data: { id, body, miles, time, username, likeCount, likes, c
           {commentCount}
         </Label>
       </Button>
+      {/* checking to see if this post was made by this user,
+          posts can only be deleted by their own users */}
+      {user && user.username === username && <DeleteButton timeId={id} />}
     </Card.Content>
   </Card>
   )

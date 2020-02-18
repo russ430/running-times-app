@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Transition } from 'semantic-ui-react';
 
 import { AuthContext } from '../context/auth';
 import TimeCard from '../components/TimeCard';
@@ -22,11 +22,15 @@ function Home() {
             <PostForm />
           </Grid.Column>
         )}
-        {loading ? <h1>Loading times...</h1> : (data.getTimes.map(time => (
-          <Grid.Column key={time.id} style={{ marginBottom: '20px' }}>
-            <TimeCard data={time} />
-          </Grid.Column>
-        )))}
+        {loading ? <h1>Loading times...</h1> : (
+          <Transition.Group duration={200}>
+            {data.getTimes.map(time => (
+              <Grid.Column key={time.id} style={{ marginBottom: '20px' }}>
+                <TimeCard data={time} />
+              </Grid.Column>
+            ))}
+          </Transition.Group>
+        )}
       </Grid.Row>
     </Grid>
   )
