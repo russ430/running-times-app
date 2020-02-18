@@ -48,8 +48,8 @@ module.exports = gql`
     login(username: String!, password: String!): User!
     postTime(time: String!, miles: String!, body: String!): Time!
     deleteTime(timeId: ID!): String!
-    postComment(timeId: String!, body: String!): Comment!
-    deleteComment(timeId: String!, commentId: String!): Time!
+    postComment(timeId: ID!, body: String!): Time!
+    deleteComment(timeId: ID!, commentId: ID!): Time!
     likeTime(timeId: ID!): Time!
   }
 `;

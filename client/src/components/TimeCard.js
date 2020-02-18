@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { Card, Icon, Label, Image, Button } from 'semantic-ui-react';
+import { Card, Icon, Label, Image, Button, Popup } from 'semantic-ui-react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 import { AuthContext } from '../context/auth';
 import LikeButton from '../components/LikeButton';
 import DeleteButton from './DeleteButton';
+import MyPopup from '../util/MyPopup';
 
 function TimeCard({ data: { id, body, miles, time, username, likeCount, likes, commentCount, createdAt }}) {
 
@@ -30,14 +31,16 @@ function TimeCard({ data: { id, body, miles, time, username, likeCount, likes, c
     <Card.Content extra>
       {/* passing the required props needed to create a like button from the destructured props */}
       <LikeButton user={user} time={{ id, likes, likeCount }} />
-      <Button labelPosition='right' as={Link} to={`/posts/${id}`}>
-        <Button color='blue' basic>
-          <Icon name='comments' />
+      <MyPopup content="Comment on post">
+        <Button labelPosition='right' as={Link} to={`/times/${id}`}>
+          <Button color='blue' basic>
+            <Icon name='comments' />
+          </Button>
+          <Label basic color='blue' pointing='left'>
+            {commentCount}
+          </Label>
         </Button>
-        <Label basic color='blue' pointing='left'>
-          {commentCount}
-        </Label>
-      </Button>
+      </MyPopup>
       {/* checking to see if this post was made by this user,
           posts can only be deleted by their own users */}
       {user && user.username === username && <DeleteButton timeId={id} />}
