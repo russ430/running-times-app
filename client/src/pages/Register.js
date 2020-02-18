@@ -21,8 +21,8 @@ function Register(props) {
   const { changedInputHandler, onFormSubmitHandler, values } = useForm(registerUser, initialState)
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    // the second argument in useMutation is an options argument
-    // in this case we are creating a function called 'update'
+    // the second argument in useMutation is an options object,
+    // in this case we are creating a function/method called 'update'
     // this will trigger if the mutation is successfully exexcuted
     // the first argument for update is 'proxy' which contains metadata
     // the second argument is the result of the mutation
@@ -38,7 +38,7 @@ function Register(props) {
       // inside of 'extensions' we can access our errors object with all of our predefined server errors
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
-    // the third argument is the variables object that we will be sending with the mutation
+    // the variables property is the object which we will be sending with the mutation
     variables: values
   });
   
