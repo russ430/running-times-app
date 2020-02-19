@@ -54,7 +54,7 @@ function PostForm() {
   return (
     <>
       <Form onSubmit={onFormSubmitHandler}>
-        <h2>Post a time:</h2>
+        <h2>Post a new time:</h2>
         <Form.Field>
           <Form.Input
             placeholder="MM:SS"

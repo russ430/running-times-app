@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Card, Icon, Label, Image, Button, Popup } from 'semantic-ui-react';
+import { Card, Icon, Label, Image, Button } from 'semantic-ui-react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
@@ -13,18 +13,17 @@ function TimeCard({ data: { id, body, miles, time, username, likeCount, likes, c
   const { user } = useContext(AuthContext);
 
   return (
-    <Card>
+    <Card fluid>
     <Card.Content>
       <Image
         floated='right'
         size='mini'
         src='https://react.semantic-ui.com/images/avatar/large/molly.png'
         />
-      <Card.Header>{username}</Card.Header>
+      <Card.Header as={Link} to={`/profile/${username}`}>{username}</Card.Header>
       <Card.Meta as={Link} to={`/times/${id}`}>{moment(createdAt).format("ddd, h:mm a")}</Card.Meta>
       <Card.Description>
-        <p>Miles: {miles}</p>
-        <p>Time: {time}</p>
+        <h3>{miles} miles in {time}</h3>
         <p style={{ fontSize: "1.5rem" }}>{body}</p>
       </Card.Description>
     </Card.Content>

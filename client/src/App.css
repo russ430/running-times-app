@@ -12,3 +12,11 @@
 .ui.teal.buttons .button:focus {
   background-color: #00b5ad;
 }
+
+.recentRunFeed {
+  border-bottom: 1px solid #eee;
+}
+
+.recentRunFeed:last-child {
+  border-bottom: none;
+}

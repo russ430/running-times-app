@@ -17,10 +17,18 @@ export default function MenuBar() {
   const menuBar = user ? (
     <Menu pointing secondary size="massive" color="teal">
       <Menu.Item
-        name={user.username}
-        active
+        name='home'
+        active={activeItem === 'home'}
         as={Link}
         to='/'
+        onClick={handleItemClick}
+      />
+      <Menu.Item
+        name="profile"
+        active={activeItem === 'profile'}
+        as={Link}
+        to={`/profile/${user.username}`}
+        onClick={handleItemClick}
       />
       <Menu.Menu position='right'>
         <Menu.Item

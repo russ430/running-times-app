@@ -44,7 +44,7 @@ function SingleTime(props) {
       <h1>Loading...</h1>
     )
   } else {
-    const { id, body, createdAt, username, comments, commentCount, likes, likeCount } = data.getTime;
+    const { id, body, createdAt, username, miles, time, comments, commentCount, likes, likeCount } = data.getTime;
     return (
       <Grid>
         <Grid.Row>
@@ -60,10 +60,15 @@ function SingleTime(props) {
               <Card.Content>
                 <Card.Header>{username}</Card.Header>
                 <Card.Meta>{moment(createdAt).fromNow()}</Card.Meta>
-                <Card.Description>{body}</Card.Description>
+                <Card.Description>
+                  <p>Miles: {miles}</p>
+                  <p>Time: {time}</p>
+                  <p>{body}</p>
+                </Card.Description>
               </Card.Content>
               <hr />
               <Card.Content extra>
+                
                 <LikeButton user={user} time={{ id, likeCount, likes }} />
                 <MyPopup content="Comment on Post">
                   <Button
@@ -154,6 +159,8 @@ const FETCH_TIME_QUERY = gql`
       id
       username
       body
+      miles
+      time
       createdAt
       likeCount
       likes {

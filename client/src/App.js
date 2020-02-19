@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import MenuBar from './components/MenuBar';
 import SingleTime from './pages/SingleTime';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               back to the homepage if they somehow navigate to the login or register page. */}
           <AuthRoute exact path='/login' component={Login} />
           <AuthRoute exact path='/register' component={Register} />
+          <Route exact path='/profile/:username' component={Profile} />
           <Route exact path="/times/:timeId" component={SingleTime } />
         </Container>
       </Router>
