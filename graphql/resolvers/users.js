@@ -119,6 +119,10 @@ module.exports = {
           // converting seconds to MM:SS using secondsToFormat function
           const newAvgMile = secondsToFormat(avgSecondsMile);
           userData.runStats[0].avgMile = newAvgMile;
+
+          //---- CALCULATING AVG SPEED IN MPH ----//
+          const avgSpeed = (60 / (avgSecondsMile / 60)).toFixed(1);
+          userData.runStats[0].avgSpeed = avgSpeed;
           
           //---- FORMATTING LONGEST TIME ----//
           const longestRunTime = user.runStats[0].longestRunTime;
