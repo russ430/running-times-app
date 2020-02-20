@@ -27,6 +27,9 @@ module.exports = gql`
   type Stats {
     totalMiles: String!
     totalTime: String!
+    avgMile: String!
+    longestRunTime: String!
+    longestRunMiles: String!
   }
   type User {
     id: ID!

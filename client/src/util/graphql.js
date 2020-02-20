@@ -8,6 +8,8 @@ export const FETCH_USER_DATA_QUERY = gql`
       runStats {
         totalMiles
         totalTime
+        avgMile
+        longestTime
       }
     }
   }

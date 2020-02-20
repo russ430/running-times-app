@@ -4,14 +4,11 @@ const checkAuth = require('../../util/checkAuth');
 const Time = require('../../models/Time');
 const User = require('../../models/User');
 
-const addTimes = (oldTime, newTime) => {
-  const splitNewTime = newTime.split(':');
+const toSeconds = (time) => {
+  const splitNewTime = time.split(':');
   // converting minutes to seconds and adding to seconds
   const totalNewSeconds = (parseFloat(splitNewTime[0]) * 60) + parseFloat(splitNewTime[1]);
-  // adding new total seconds to old total seconds
-  const totalSeconds = parseFloat(oldTime) + totalNewSeconds;
-
-  return totalSeconds
+  return totalNewSeconds
 }
 
 module.exports = {
@@ -47,19 +44,62 @@ module.exports = {
       }
       
       // finding the user
-      const updateUser = await User.findOne({ username });
+      const foundUser = await User.findOne({ username });
 
+      //----UPDATING TOTAL MILEAGE ----//
       // grabbing the current total mileage
-      const oldMiles = updateUser.runStats[0].totalMiles;
-      // converting strings to floats and adding the old mileage to the new mileage
-      const newMiles = parseFloat(oldMiles) + parseFloat(miles);
+      const oldMiles = foundUser.runStats[0].totalMiles;
+      // converting strings to floats and adding the old total to the new total
+      const newTotalMiles = parseFloat(oldMiles) + parseFloat(miles);
 
+      //---- UPDATING TOTAL TIME ----//
       // grabbing the current total time
-      const oldTotalTime = updateUser.runStats[0].totalTime;
-      const newTotal = addTimes(oldTotalTime, time);
+      const oldTotalTime = foundUser.runStats[0].totalTime;
+      const newTotalSeconds = toSeconds(oldTotalTime) + toSeconds(time);
 
-      // updating the updated data
-      User.findOneAndUpdate({ username: username }, { $set: { runStats: { totalMiles: newMiles, totalTime: newTotal }}}, { returnOriginal: false }, (err, doc) => {
+      //---- UPDATING AVG MILE ----//
+      // calculating average mile
+      const newAvgMile = (newTotalSeconds/newTotalMiles)
+
+      //---- UPDATING LONGEST RUN ----//
+      const updatedLongestTime = () => {
+        // converting new time to seconds
+        const newTime = toSeconds(time);
+        // if the user has a longest time
+        if(foundUser.runStats[0].longestTime) {
+          // check if the new time is longer than the current longest time
+          if(newTime > foundUser.runStats[0].longestTime) {
+            // if it is, return the new time
+            return newTime;
+          } else {
+            // otherwise kee the old time
+            return foundUser.runStats[0].longestTime;
+          }
+        // if the user doesn't have a new longest time, use the new time
+        } else {
+          return newTime
+        }
+      }
+
+      //---- UPDATING LONGEST MILEAGE ----//
+      const updatedLongestRunMiles = () => {
+        if(miles > foundUser.runStats[0].longestRunMiles) {
+          return miles
+        } else {
+          return foundUser.runStats[0].longestRunMiles
+        }
+      }
+
+      //---- UPDATING USER DATA ----//
+      User.findOneAndUpdate({ username: username }, { 
+        $set: { runStats: { 
+          totalMiles: newTotalMiles, 
+          totalTime: newTotalSeconds, 
+          avgMile: newAvgMile, 
+          longestRunTime: updatedLongestTime(),
+          longestRunMiles: updatedLongestRunMiles()
+        }}}, 
+        { returnOriginal: false }, (err, doc) => {
         if (err) {
           console.log('something went wrong');
         }

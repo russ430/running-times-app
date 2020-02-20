@@ -9,11 +9,9 @@ const userSchema = new Schema({
   runStats: [
     {
       totalMiles: String,
-      totalTime: String
-      // avgMile: String,
-      // fastestMile: String,
-      // longestTime: String,
-      // longestMiles: String
+      totalTime: String,
+      longestRunTime: String,
+      longestRunMiles: String
     }
   ]
 });

@@ -14,6 +14,18 @@ function generateToken(user) {
   }, SECRET, { expiresIn: '1h' });
 };
 
+function secondsToFormat(totalSeconds) {
+  // getting the total minutes by dividing total seconds by 60 and removing the remainder
+  const totalMins = (Math.floor(parseFloat(totalSeconds) / 60));
+  // subtracting the total mins in seconds from the total seconds
+  const seconds = totalSeconds - (totalMins * 60);
+  if(seconds < 10) {
+    return `${totalMins}:0${seconds}`;
+  } else {
+    return `${totalMins}:${seconds}`;
+  };
+}
+
 module.exports = {
   Mutation: {
     async login(_, { username, password }) {
@@ -84,8 +96,36 @@ module.exports = {
     async getUserData(_, { username }) {
       try {
         const user = await User.findOne({ username });
+
         if (user) {
-          return user
+          const userData = { runStats: [{}] };
+          userData.name = user.name;
+          userData.createdAt = user.createdAt;
+
+          // adding total miles to userData obj
+          userData.runStats[0].totalMiles = user.runStats[0].totalMiles;
+          // adding longest miles run to userData obj
+          userData.runStats[0].longestRunMiles = user.runStats[0].longestRunMiles;
+
+          //---- FORMATTING TOTAL TIME TO MM:SS ----//
+          const totalSeconds = user.runStats[0].totalTime;
+          // converting seconds to MM:SS using secondsToFormat function
+          const newTotalTime = secondsToFormat(totalSeconds);
+          userData.runStats[0].totalTime = newTotalTime;
+
+          //---- CALCULATING AVG MILE AND FORMATTING ----//
+          // dividing total seconds by total miles to get avg seconds/mile
+          const avgSecondsMile = Math.floor(parseFloat(totalSeconds)/parseFloat(user.runStats[0].totalMiles));
+          // converting seconds to MM:SS using secondsToFormat function
+          const newAvgMile = secondsToFormat(avgSecondsMile);
+          userData.runStats[0].avgMile = newAvgMile;
+          
+          //---- FORMATTING LONGEST TIME ----//
+          const longestRunTime = user.runStats[0].longestRunTime;
+          const newlongestRunTime = secondsToFormat(longestRunTime);
+          userData.runStats[0].longestRunTime = newlongestRunTime;
+
+          return userData;
         }
       } catch(err) {
         console.log(err);
