@@ -8,8 +8,8 @@ export default function MenuBar() {
   const { user, logout } = useContext(AuthContext);
 
   const pathname = window.location.pathname;
-  const path = pathname === '/' ? 'home' : pathname.substr(1);
   
+  const path = pathname === '/' ? 'home' : pathname.substr(1);
   const [activeItem, setActiveItem] = useState(path);
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
@@ -24,8 +24,8 @@ export default function MenuBar() {
         onClick={handleItemClick}
       />
       <Menu.Item
-        name="profile"
-        active={activeItem === 'profile'}
+        name="my profile"
+        active={activeItem === 'my profile'}
         as={Link}
         to={`/profile/${user.username}`}
         onClick={handleItemClick}

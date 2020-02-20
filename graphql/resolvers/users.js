@@ -79,5 +79,17 @@ module.exports = {
         token
       };
     }
+  },
+  Query: {
+    async getUserData(_, { username }) {
+      try {
+        const user = await User.findOne({ username });
+        if (user) {
+          return user
+        }
+      } catch(err) {
+        console.log(err);
+      }
+    }
   }
 }

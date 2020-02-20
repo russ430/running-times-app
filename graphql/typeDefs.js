@@ -24,13 +24,18 @@ module.exports = gql`
     createdAt: String!
     username: String!
   }
+  type Stats {
+    totalMiles: String!
+    totalTime: String!
+  }
   type User {
     id: ID!
     name: String!
     email: String!
     token: String!
     username: String!
-    createdAt: String!  
+    createdAt: String!
+    runStats: [Stats]
   }
   input RegisterInput {
     name: String!
@@ -42,6 +47,7 @@ module.exports = gql`
   type Query {
     getTimes: [Time]
     getTime(timeId: ID!): Time
+    getUserData(username: String!): User!
   }
   type Mutation {
     register(registerInput: RegisterInput): User!

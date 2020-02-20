@@ -1,24 +1,25 @@
 import React from 'react';
-import { Feed } from 'semantic-ui-react';
+import { Feed, Icon } from 'semantic-ui-react';
 import moment from 'moment';
 
 
 function RecentRunFeed({ runData: { body, miles, time, createdAt, likeCount }}) {
 
   return (
-    <Feed className="recentRunFeed" style={{ padding: "0 0.5rem", paddingBottom: "0.5rem" }}>
-      <Feed.Event>
+      <Feed.Event style={{ padding: '1rem 0'}} className="recentRunFeed">
         <Feed.Content>
-          <Feed.Date>{moment(createdAt).fromNow()}</Feed.Date>
           <Feed.Summary>
             {miles} miles in {time}
           </Feed.Summary>
-          <Feed.Extra text>
+          <Feed.Date>{moment(createdAt).fromNow()}</Feed.Date>
+          <Feed.Extra style={{ margin: '0', padding: '0.5rem 0' }}>
             {body}
           </Feed.Extra>
+          <Feed.Like>
+            <Icon name='like'/>{`${likeCount} ${likeCount === 1 ? 'Like' : 'Likes'}`}
+          </Feed.Like>
         </Feed.Content>
       </Feed.Event>
-    </Feed>
   )
 };
 
