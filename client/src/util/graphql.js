@@ -9,8 +9,6 @@ export const FETCH_USER_DATA_QUERY = gql`
         totalMiles
         totalTime
         avgMile
-        longestRunTime
-        longestRunMiles
         avgSpeed
       }
     }

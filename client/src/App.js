@@ -19,17 +19,19 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <Container>
+        <div className="main-page">
           <MenuBar />
-          <Route exact path='/' component={Home} />
-          {/* These AuthRoutes will check to see if the user is logged in.
-              If the user is in fact logged in the AuthRoute will redirect the user 
-              back to the homepage if they somehow navigate to the login or register page. */}
-          <AuthRoute exact path='/login' component={Login} />
-          <AuthRoute exact path='/register' component={Register} />
-          <Route exact path='/profile/:username' component={Profile} />
-          <Route exact path="/times/:timeId" component={SingleTime } />
-        </Container>
+          <div className="content-container">
+            <Route exact path='/' component={Home} />
+            {/* These AuthRoutes will check to see if the user is logged in.
+                If the user is in fact logged in the AuthRoute will redirect the user 
+                back to the homepage if they somehow navigate to the login or register page. */}
+            <AuthRoute exact path='/login' component={Login} />
+            <AuthRoute exact path='/register' component={Register} />
+            <Route exact path='/profile/:username' component={Profile} />
+            <Route exact path="/times/:timeId" component={SingleTime } />
+          </div>
+        </div>
       </Router>
     </AuthProvider>
   );

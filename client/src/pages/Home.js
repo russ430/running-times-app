@@ -14,7 +14,7 @@ function Home() {
   return (
     <>
       {user && (
-          <Grid style={{ margin: '1rem 0' }} centered columns={2}>
+          <Grid centered columns={2}>
             <Grid.Column  width={5}>
               <PostForm />
             </Grid.Column>

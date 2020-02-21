@@ -96,7 +96,7 @@ module.exports = {
       const oldPace = foundUser.runStats[0].quickestPace;
       const newPace = toSeconds(time);
       const fastestPace = () => {
-        if (newPace < oldPace) {
+        if (newPace < oldPace || oldPace === '0') {
           return newPace;
         } else {
           return oldPace;

@@ -15,15 +15,19 @@ function generateToken(user) {
 };
 
 function secondsToFormat(totalSeconds) {
-  // getting the total minutes by dividing total seconds by 60 and removing the remainder
-  const totalMins = (Math.floor(parseFloat(totalSeconds) / 60));
-  // subtracting the total mins in seconds from the total seconds
-  const seconds = totalSeconds - (totalMins * 60);
-  if(seconds < 10) {
-    return `${totalMins}:0${seconds}`;
+  if (totalSeconds == '0') {
+    return '0';
   } else {
-    return `${totalMins}:${seconds}`;
-  };
+    // getting the total minutes by dividing total seconds by 60 and removing the remainder
+    const totalMins = (Math.floor(parseFloat(totalSeconds) / 60));
+    // subtracting the total mins in seconds from the total seconds
+    const seconds = totalSeconds - (totalMins * 60);
+    if(seconds < 10) {
+      return `${totalMins}:0${seconds}`;
+    } else {
+      return `${totalMins}:${seconds}`;
+    };
+  }
 }
 
 module.exports = {
@@ -81,7 +85,7 @@ module.exports = {
         createdAt: new Date().toISOString(),
         runStats: [{
           totalMiles: '0',
-          totalTime: '0:00',
+          totalTime: '0',
           avgMile: '0',
           longestRunTime: '0',
           longestRunMiles: '0',
@@ -118,7 +122,7 @@ module.exports = {
           //---- FORMATTING TOTAL TIME TO MM:SS ----//
           const totalSeconds = user.runStats[0].totalTime;
           // converting seconds to MM:SS using secondsToFormat function
-          const newTotalTime = secondsToFormat(totalSeconds);
+          let newTotalTime = secondsToFormat(totalSeconds);
           userData.runStats[0].totalTime = newTotalTime;
 
           //---- FORMATTING AVG MILE ----//

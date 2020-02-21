@@ -24,7 +24,7 @@ function ProfileBox({ username }) {
         </Placeholder>
       ) : <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} /> }
       <Card.Content>
-        {loading ? (
+        {/* {loading ? (
           <Placeholder>
             <Placeholder.Header>
               <Placeholder.Line length="medium" />
@@ -44,14 +44,14 @@ function ProfileBox({ username }) {
             </Placeholder.Paragraph>
           </Placeholder>
         ) : (
-          <>
-        <Card.Header>{userData.name}</Card.Header>
+          <> */}
+        {/* <Card.Header>{userData.name}</Card.Header> */}
         <Card.Meta>
-          <span className='date'>Joined {moment(userData.createdAt).format("MMMM YYYY")}</span>
+          {/* <span className='date'>Joined {moment(userData.createdAt).format("MMMM YYYY")}</span> */}
         </Card.Meta>
         <BasicStats username={username}/>
-        </>
-        )}
+        {/* </>
+        )} */}
       </Card.Content>
       {loading ? (
         <Card.Content extra>
