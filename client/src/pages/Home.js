@@ -7,6 +7,7 @@ import TimeCard from '../components/TimeCard';
 import PostForm from '../components/PostForm';
 import { FETCH_POSTS_QUERY } from '../util/graphql';
 import BasicStats from '../components/Profile/BasicStats';
+import PersonalBests from '../components/Profile/PersonalBests';
 
 function Home() {
   const { user } = useContext(AuthContext);
@@ -31,6 +32,7 @@ function Home() {
                     </Grid.Column>
                     <Grid.Column stretched>
                       <h2 style={{ textAlign: 'center' }}>Personal Bests</h2>
+                      <PersonalBests home username={user.username}/>
                     </Grid.Column>
                   </Grid>
                 </Card.Content>

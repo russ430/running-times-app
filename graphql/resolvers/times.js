@@ -9,7 +9,7 @@ const toSeconds = (time) => {
   // converting minutes to seconds and adding to seconds
   const totalNewSeconds = (parseFloat(splitNewTime[0]) * 60) + parseFloat(splitNewTime[1]);
   return totalNewSeconds
-}
+};
 
 module.exports = {
   Query: {
@@ -55,7 +55,7 @@ module.exports = {
 
       //---- UPDATING TOTAL TIME ----//
       // grabbing the current total time
-      const oldTotalTime = foundUser.runStats[0].totalTime;
+      const oldTotalTime = parseFloat(foundUser.runStats[0].totalTime);
       const postSeconds = toSeconds(time);
       const newTotalSeconds = oldTotalTime + postSeconds;
 

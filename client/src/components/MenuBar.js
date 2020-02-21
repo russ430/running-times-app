@@ -22,12 +22,14 @@ function MenuBar() {
         to='/'
         onClick={handleItemClick}
       />
-      <Menu.Item
-        name="my profile"
-        as={Link}
-        to={`/profile/${user.username}`}
-        onClick={handleItemClick}
-      />
+      {user ? (
+        <Menu.Item
+          name="my profile"
+          as={Link}
+          to={`/profile/${user.username}`}
+          onClick={handleItemClick}
+        />
+      ) : null}
       <Menu.Menu position='right'>
         {/* if the user is logged in render just a logged out button.
         if the user is logged out render the login and register buttons */}
