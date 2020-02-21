@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { Grid, Icon } from 'semantic-ui-react';
 import { FETCH_PBEST_QUERY } from '../../util/graphql';
 
-function Achievements({ username }) {
+function PersonalBests({ username }) {
   const { data } = useQuery(FETCH_PBEST_QUERY, { variables: { username }});
 
   let pBestData;
@@ -44,4 +44,4 @@ function Achievements({ username }) {
   )
 };
 
-export default Achievements;
+export default PersonalBests;

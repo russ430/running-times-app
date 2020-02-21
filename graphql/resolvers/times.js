@@ -61,7 +61,7 @@ module.exports = {
 
       //---- UPDATING AVG MILE ----//
       // calculating average mile
-      const newAvgMile = (newTotalSeconds/newTotalMiles)
+      const newAvgMile = (newTotalSeconds/newTotalMiles).toFixed(0);
 
       //---- UPDATING LONGEST RUN ----//
       const updatedLongestTime = () => {

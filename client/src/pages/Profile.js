@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import ProfileBox from '../components/Profile/ProfileBox';
-import Achievements from '../components/Profile/Achievements';
+import PersonalBests from '../components/Profile/PersonalBests';
 import RecentRunFeed from '../components/RecentRunFeed';
 
 function Profile(props) {
@@ -16,7 +16,7 @@ function Profile(props) {
       </Grid.Column>
       <Grid.Column width={12}>
         <h1 style={{ textAlign: 'center', margin: '0', padding: '1rem 0' }}>Personal Bests</h1>
-        <Achievements username={username} />  
+        <PersonalBests username={username} />  
         <RecentRunFeed username={username} />
       </Grid.Column>
     </Grid>
