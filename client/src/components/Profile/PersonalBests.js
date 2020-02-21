@@ -6,14 +6,17 @@ import { FETCH_PBEST_QUERY } from '../../util/graphql';
 import ListItem from './PersonalBests/ListItem';
 import GridItem from './PersonalBests/GridItem';
 
-function PersonalBests({ home, username }) {
-  const { data } = useQuery(FETCH_PBEST_QUERY, { variables: { username }});
+function PersonalBests({ home, username, refetchData }) {
+  const { data, refetch } = useQuery(FETCH_PBEST_QUERY, { variables: { username }});
 
   let pBestData;
   if (data) {
     pBestData = data.getUserData.runStats[0]
   }
 
+  if (refetchData) {
+    refetch();
+  }
 
   return (
     <>

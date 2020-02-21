@@ -14,7 +14,7 @@ function RecentRunFeed({ username }) {
   }
 
   return (
-    <Grid columns={3} style={{ padding: '1.5rem 0' }} centered>
+    <Grid columns={3} style={{ padding: '1.5rem 0' }}>
       <h1 style={{ textAlign: 'center', margin: '0', padding: '1rem 0' }}>Recent Runs</h1>
       <Grid.Row >
         {!data ? <h1>Loading times...</h1> : (

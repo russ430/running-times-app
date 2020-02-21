@@ -6,8 +6,8 @@ import { FETCH_POSTS_QUERY } from '../util/graphql';
 
 import { useForm } from '../util/hooks';
 
-function PostForm() {
-  const { values, onFormSubmitHandler, changedInputHandler } = useForm(postTimeCallback, {
+function PostForm(props) {
+  const { values, submitHandler, changedInputHandler } = useForm(postTimeCallback, {
     time: '',
     miles: '',
     body: ''
@@ -17,6 +17,12 @@ function PostForm() {
     values.time = '';
     values.miles = '';
     values.body = '';
+  }
+
+  const onFormSubmitHandler = event => {
+    event.preventDefault();
+    submitHandler();
+    props.onSubmitHandler();
   }
 
   const [postTime, { error }] = useMutation(POST_TIME_MUTATION, {

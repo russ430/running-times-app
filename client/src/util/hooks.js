@@ -11,14 +11,13 @@ export const useForm = (callback, initialState = {}) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
-  const onFormSubmitHandler = event => {
-    event.preventDefault();
+  const submitHandler = () => {
     callback();
   };
 
   return {
     changedInputHandler,
-    onFormSubmitHandler,
+    submitHandler,
     values
   }
 };

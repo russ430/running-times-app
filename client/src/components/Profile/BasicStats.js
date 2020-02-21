@@ -3,14 +3,17 @@ import { useQuery } from '@apollo/react-hooks';
 import { List } from 'semantic-ui-react';
 import { FETCH_USER_DATA_QUERY } from '../../util/graphql';
 
-function BasicStats({ username }) {
-  const { data } = useQuery(FETCH_USER_DATA_QUERY, { variables: { username } })
+function BasicStats({ refetchData, username }) {
+  const { data, refetch } = useQuery(FETCH_USER_DATA_QUERY, { variables: { username } })
 
   let runStats = null;
   if(data) {
     runStats = data.getUserData.runStats[0];
   };
 
+  if (refetchData) {
+    refetch();
+  };
 
   return (
     <>

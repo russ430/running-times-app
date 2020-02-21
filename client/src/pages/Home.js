@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { Grid, Transition, Card } from 'semantic-ui-react';
 
@@ -11,6 +11,7 @@ import PersonalBests from '../components/Profile/PersonalBests';
 
 function Home() {
   const { user } = useContext(AuthContext);
+  const [refetchData, setRefetchData] = useState(false);
   const { loading, data } = useQuery(FETCH_POSTS_QUERY);
 
   return (
@@ -19,15 +20,15 @@ function Home() {
       {user && (
           <Grid.Column width={4}>
             <Grid.Row>
-              <PostForm />
+              <PostForm onSubmitHandler={() => setRefetchData(true)} />
             </Grid.Row>
             <Grid.Row>
               <Card style={{ marginTop: '2rem' }}>
                 <Card.Content>
                   <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>Stats</h2>
-                  <BasicStats username={user.username}/>
+                  <BasicStats username={user.username} refetchData={refetchData}/>
                   <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>Personal Bests</h2>
-                  <PersonalBests home username={user.username}/>
+                  <PersonalBests home username={user.username} refetchData={refetchData}/>
                 </Card.Content>
               </Card>
             </Grid.Row>
