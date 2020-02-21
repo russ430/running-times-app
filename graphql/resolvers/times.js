@@ -111,7 +111,8 @@ module.exports = {
           avgMile: newAvgMile, 
           longestRunTime: updatedLongestTime(),
           longestRunMiles: updatedLongestRunMiles(),
-          quickestPace: fastestPace()
+          quickestPace: fastestPace(),
+          postedYet: true
         }}}, 
         { returnOriginal: false }, (err, doc) => {
         if (err) {

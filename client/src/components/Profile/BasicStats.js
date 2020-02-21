@@ -9,12 +9,13 @@ function ProfileBox({ username }) {
   let runStats = null;
   if(data) {
     runStats = data.getUserData.runStats[0];
+    console.log(runStats);
   };
 
 
   return (
     <>
-      {!data ? <p>loading...</p> : (
+      {data ? (runStats.postedYet ? (
         <List>
           <List.Item>
             <List.Icon name='road' />
@@ -45,7 +46,8 @@ function ProfileBox({ username }) {
             </List.Content>
           </List.Item>
         </List>
-      )}
+      ) : <h3>No stats yet, check back soon!</h3>
+      ) : <p>loading...</p>}
     </>
   )
 };

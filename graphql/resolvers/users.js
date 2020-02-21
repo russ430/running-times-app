@@ -89,7 +89,8 @@ module.exports = {
           avgMile: '0',
           longestRunTime: '0',
           longestRunMiles: '0',
-          quickestPace: '999999'
+          quickestPace: '0',
+          postedYet: false
         }]
       });
 
@@ -143,6 +144,10 @@ module.exports = {
           //---- FORMATTING QUICKEST PACE ----//
           const quickestPace = secondsToFormat(parseFloat(user.runStats[0].quickestPace));
           userData.runStats[0].quickestPace = quickestPace;
+
+          //---- HAS USER POSTED YET ----//
+          const postedYet = user.runStats[0].postedYet;
+          userData.runStats[0].postedYet = postedYet;
 
           return userData;
         }

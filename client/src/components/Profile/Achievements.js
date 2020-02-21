@@ -11,9 +11,10 @@ function Achievements({ username }) {
     pBestData = data.getUserData.runStats[0]
   }
 
+
   return (
     <>
-    {data ? (
+    {data ? (pBestData.postedYet ? (
       <Grid columns={3} style={{ padding: '1.5rem 0', borderBottom: '1px solid #eee' }}>
         <Grid.Column stretched>
           <h2 style={{ textAlign: 'center', fontWeight: '400' }}>Farthest Run</h2>
@@ -37,6 +38,7 @@ function Achievements({ username }) {
           </div>
         </Grid.Column>
       </Grid>
+    ) : <h1 style={{ textAlign: 'center', fontWeight: '400', fontStyle: 'italic' }}>I haven't posted any times yet!</h1>
     ) : <h1>Loading...</h1>}
     </>
   )

@@ -13,7 +13,8 @@ const userSchema = new Schema({
       longestRunTime: String,
       longestRunMiles: String,
       avgMile: String,
-      quickestPace: String
+      quickestPace: String,
+      postedYet: Boolean
     }
   ]
 });

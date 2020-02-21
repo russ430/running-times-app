@@ -10,6 +10,7 @@ export const FETCH_USER_DATA_QUERY = gql`
         totalTime
         avgMile
         avgSpeed
+        postedYet
       }
     }
   }
@@ -22,6 +23,7 @@ export const FETCH_PBEST_QUERY = gql`
         longestRunTime
         longestRunMiles
         quickestPace
+        postedYet
       }
     }
   }
