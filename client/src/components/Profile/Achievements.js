@@ -30,10 +30,10 @@ function Achievements({ username }) {
           </div>
         </Grid.Column>
         <Grid.Column stretched>
-          <h2 style={{ textAlign: 'center', fontWeight: '400' }}>Fastest Mile</h2>
+          <h2 style={{ textAlign: 'center', fontWeight: '400' }}>Quickest Pace</h2>
           <div style={{ textAlign: "center" }}>
             <Icon size="huge" name="trophy" color="yellow"/>
-            <h2 style={{ marginTop: '1rem', fontWeight: '400' }}>10:00</h2>
+            <h2 style={{ marginTop: '1rem', fontWeight: '400' }}>{pBestData.quickestPace}</h2>
           </div>
         </Grid.Column>
       </Grid>

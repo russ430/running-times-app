@@ -23,6 +23,7 @@ export const FETCH_PBEST_QUERY = gql`
       runStats {
         longestRunTime
         longestRunMiles
+        quickestPace
       }
     }
   }

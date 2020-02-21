@@ -82,9 +82,10 @@ module.exports = {
         runStats: [{
           totalMiles: '0',
           totalTime: '0:00',
+          avgMile: '0',
           longestRunTime: '0',
           longestRunMiles: '0',
-          fastestMile: '9999:99'
+          quickestPace: '999999'
         }]
       });
 
@@ -108,7 +109,6 @@ module.exports = {
           const userData = { runStats: [{}] };
           userData.name = user.name;
           userData.createdAt = user.createdAt;
-          console.log(user);
 
           // adding total miles to userData obj
           userData.runStats[0].totalMiles = user.runStats[0].totalMiles;
@@ -122,11 +122,10 @@ module.exports = {
           userData.runStats[0].totalTime = newTotalTime;
 
           //---- FORMATTING AVG MILE ----//
-          // dividing total seconds by total miles to get avg seconds/mile
-          const avgSecondsMile = Math.floor(parseFloat(totalSeconds)/parseFloat(user.runStats[0].totalMiles));
-          // converting seconds to MM:SS using secondsToFormat function
-          const newAvgMile = secondsToFormat(avgSecondsMile);
-          userData.runStats[0].avgMile = newAvgMile;
+          // formatting avgMile seconds to MM:SS using secondsToFormat function
+          const avgSecondsMile = user.runStats[0].avgMile;
+          const avgMileFormatted = secondsToFormat(avgSecondsMile);
+          userData.runStats[0].avgMile = avgMileFormatted;
 
           //---- CALCULATING AVG SPEED IN MPH ----//
           const avgSpeed = (60 / (avgSecondsMile / 60)).toFixed(1);
@@ -137,7 +136,9 @@ module.exports = {
           const newlongestRunTime = secondsToFormat(longestRunTime);
           userData.runStats[0].longestRunTime = newlongestRunTime;
 
-          userData.runStats[0].fastestMile = user.runStats[0].fastestMile
+          //---- FORMATTING QUICKEST PACE ----//
+          const quickestPace = secondsToFormat(parseFloat(user.runStats[0].quickestPace));
+          userData.runStats[0].quickestPace = quickestPace;
 
           return userData;
         }
