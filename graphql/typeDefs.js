@@ -31,6 +31,7 @@ module.exports = gql`
     longestRunTime: String!
     longestRunMiles: String!
     avgSpeed: String!
+    fastestMile: String!
   }
   type User {
     id: ID!

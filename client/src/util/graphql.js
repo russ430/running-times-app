@@ -11,6 +11,18 @@ export const FETCH_USER_DATA_QUERY = gql`
         avgMile
         longestRunTime
         longestRunMiles
+        avgSpeed
+      }
+    }
+  }
+`;
+
+export const FETCH_PBEST_QUERY = gql`
+  query($username: String!) {
+    getUserData(username: $username) {
+      runStats {
+        longestRunTime
+        longestRunMiles
       }
     }
   }

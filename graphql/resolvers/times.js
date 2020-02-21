@@ -8,6 +8,7 @@ const toSeconds = (time) => {
   const splitNewTime = time.split(':');
   // converting minutes to seconds and adding to seconds
   const totalNewSeconds = (parseFloat(splitNewTime[0]) * 60) + parseFloat(splitNewTime[1]);
+  console.log(time, totalNewSeconds)
   return totalNewSeconds
 }
 
@@ -42,20 +43,21 @@ module.exports = {
       if (time.trim() === '' || miles.trim() === '') {
         throw new Error('Time and Mileage must not be empty')
       }
-      
-      // finding the user
-      const foundUser = await User.findOne({ username });
+
+      //TODO: check out what's happening with total time coming up as NaN
+      //TODO: put the mile updates in its own resolver?
 
       //----UPDATING TOTAL MILEAGE ----//
       // grabbing the current total mileage
-      const oldMiles = foundUser.runStats[0].totalMiles;
+      const oldMiles = user.runStats[0].totalMiles;
       // converting strings to floats and adding the old total to the new total
       const newTotalMiles = parseFloat(oldMiles) + parseFloat(miles);
 
       //---- UPDATING TOTAL TIME ----//
       // grabbing the current total time
-      const oldTotalTime = foundUser.runStats[0].totalTime;
-      const newTotalSeconds = toSeconds(oldTotalTime) + toSeconds(time);
+      const oldTotalTime = user.runStats[0].totalTime;
+      const postSeconds = toSeconds(time);
+      const newTotalSeconds = toSeconds(oldTotalTime) + postSeconds;
 
       //---- UPDATING AVG MILE ----//
       // calculating average mile
@@ -66,14 +68,14 @@ module.exports = {
         // converting new time to seconds
         const newTime = toSeconds(time);
         // if the user has a longest time
-        if(foundUser.runStats[0].longestTime) {
+        if(user.runStats[0].longestTime) {
           // check if the new time is longer than the current longest time
-          if(newTime > foundUser.runStats[0].longestTime) {
+          if(newTime > user.runStats[0].longestTime) {
             // if it is, return the new time
             return newTime;
           } else {
             // otherwise kee the old time
-            return foundUser.runStats[0].longestTime;
+            return user.runStats[0].longestTime;
           }
         // if the user doesn't have a new longest time, use the new time
         } else {
@@ -83,10 +85,10 @@ module.exports = {
 
       //---- UPDATING LONGEST MILEAGE ----//
       const updatedLongestRunMiles = () => {
-        if(miles > foundUser.runStats[0].longestRunMiles) {
+        if(miles > user.runStats[0].longestRunMiles) {
           return miles
         } else {
-          return foundUser.runStats[0].longestRunMiles
+          return user.runStats[0].longestRunMiles
         }
       }
 

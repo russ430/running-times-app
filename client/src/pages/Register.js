@@ -22,11 +22,11 @@ function Register(props) {
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     // the second argument in useMutation is an options object,
-    // in this case we are creating a function/method called 'update'
-    // this will trigger if the mutation is successfully exexcuted
-    // the first argument for update is 'proxy' which contains metadata
+    // the first instance in the object is a function/method called 'update'
+    // this will trigger if the mutation is successfully exexcuted,
+    // the first argument for 'update' is 'proxy' which contains metadata
     // the second argument is the result of the mutation
-    update(proxy, { data: { login: userData }}){
+    update(proxy, { data: { register: userData }}){
       context.login(userData)
       props.history.push('/')
     },

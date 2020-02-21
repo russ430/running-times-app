@@ -1,25 +1,33 @@
 import React from 'react';
-import { Feed, Icon } from 'semantic-ui-react';
-import moment from 'moment';
+import { useQuery } from '@apollo/react-hooks';
+import { Grid, Transition } from 'semantic-ui-react';
+import TimeCard from './TimeCard';
 
+import { FETCH_POSTS_QUERY } from '../util/graphql';
 
-function RecentRunFeed({ runData: { body, miles, time, createdAt, likeCount }}) {
+function RecentRunFeed({ username }) {
+  const { data } = useQuery(FETCH_POSTS_QUERY);
+
+  let allRuns;
+  if(data) {
+    allRuns = data.getTimes.filter(time => time.username === username);
+  }
 
   return (
-      <Feed.Event style={{ padding: '1rem 0'}} className="recentRunFeed">
-        <Feed.Content>
-          <Feed.Summary>
-            {miles} miles in {time}
-          </Feed.Summary>
-          <Feed.Date>{moment(createdAt).fromNow()}</Feed.Date>
-          <Feed.Extra style={{ margin: '0', padding: '0.5rem 0' }}>
-            {body}
-          </Feed.Extra>
-          <Feed.Like>
-            <Icon name='like'/>{`${likeCount} ${likeCount === 1 ? 'Like' : 'Likes'}`}
-          </Feed.Like>
-        </Feed.Content>
-      </Feed.Event>
+    <Grid columns={3} style={{ padding: '1.5rem 0' }} centered>
+      <h1 style={{ textAlign: 'center', margin: '0', padding: '1rem 0' }}>Recent Runs</h1>
+      <Grid.Row >
+        {!data ? <h1>Loading times...</h1> : (
+          <Transition.Group duration={200}>
+            {allRuns.map(time => (
+              <Grid.Column key={time.id} style={{ marginBottom: '20px' }}>
+                <TimeCard type="profile" data={time} />
+              </Grid.Column>
+            ))}
+          </Transition.Group>
+        )}
+      </Grid.Row>
+    </Grid>
   )
 };
 

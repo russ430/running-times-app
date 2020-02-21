@@ -1,11 +1,15 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { Card, Image, List, Icon, Placeholder } from 'semantic-ui-react';
+import { Card, Image, Icon, Placeholder } from 'semantic-ui-react';
 import { FETCH_USER_DATA_QUERY } from '../../util/graphql';
 import moment from 'moment';
 
+import BasicStats from './BasicStats';
+
 function ProfileBox({ username }) {
-  const { loading, data } = useQuery(FETCH_USER_DATA_QUERY, { variables: { username } })
+  const { loading, data } = useQuery(FETCH_USER_DATA_QUERY, { 
+    variables: { username }
+  });
 
   let userData = null;
   if(data) {
@@ -45,20 +49,7 @@ function ProfileBox({ username }) {
         <Card.Meta>
           <span className='date'>Joined {moment(userData.createdAt).format("MMMM YYYY")}</span>
         </Card.Meta>
-        <List>
-          <List.Item>
-            <List.Content>
-              <List.Header>How long have you been running?</List.Header>
-              <List.Description>I've been running for about 5 years but have only recently really gotten serious.</List.Description>
-            </List.Content>
-          </List.Item>
-          <List.Item>
-            <List.Content>
-                <List.Header>Your favorite place to run?</List.Header>
-                <List.Description>I love running around the reservoir near my house!</List.Description>
-              </List.Content>
-          </List.Item>
-        </List>
+        <BasicStats username={username}/>
         </>
         )}
       </Card.Content>

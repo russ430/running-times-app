@@ -36,13 +36,13 @@ function Home() {
               <Transition.Group duration={200}>
                 {data.getTimes.map(time => (
                   <Grid.Column key={time.id} style={{ marginBottom: '20px' }}>
-                    <TimeCard data={time} />
+                    <TimeCard type="home" data={time} />
                   </Grid.Column>
                 ))}
               </Transition.Group>
             )}
           </Grid.Row>
-      </Grid>
+         </Grid>
     </>
   )
 };

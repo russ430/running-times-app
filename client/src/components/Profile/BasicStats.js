@@ -4,12 +4,14 @@ import { List } from 'semantic-ui-react';
 import { FETCH_USER_DATA_QUERY } from '../../util/graphql';
 
 function ProfileBox({ username }) {
-  const { loading, data } = useQuery(FETCH_USER_DATA_QUERY, { variables: { username } })
+  const { data } = useQuery(FETCH_USER_DATA_QUERY, { variables: { username } })
 
   let runStats = null;
   if(data) {
     runStats = data.getUserData.runStats[0];
+    console.log(runStats);
   };
+
 
   return (
     <>
@@ -34,6 +36,13 @@ function ProfileBox({ username }) {
             <List.Content>
               <List.Header>{runStats.avgMile}</List.Header>
               <List.Description>Average Mile</List.Description>
+            </List.Content>
+          </List.Item>
+          <List.Item>
+            <List.Icon name='stopwatch' />
+            <List.Content>
+              <List.Header>{runStats.avgSpeed} mph</List.Header>
+              <List.Description>Average Speed</List.Description>
             </List.Content>
           </List.Item>
         </List>

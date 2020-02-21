@@ -78,7 +78,14 @@ module.exports = {
         username,
         email,
         password,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        runStats: [{
+          totalMiles: '0',
+          totalTime: '0:00',
+          longestRunTime: '0',
+          longestRunMiles: '0',
+          fastestMile: '9999:99'
+        }]
       });
 
       const res = await newUser.save();
@@ -101,6 +108,7 @@ module.exports = {
           const userData = { runStats: [{}] };
           userData.name = user.name;
           userData.createdAt = user.createdAt;
+          console.log(user);
 
           // adding total miles to userData obj
           userData.runStats[0].totalMiles = user.runStats[0].totalMiles;
@@ -113,7 +121,7 @@ module.exports = {
           const newTotalTime = secondsToFormat(totalSeconds);
           userData.runStats[0].totalTime = newTotalTime;
 
-          //---- CALCULATING AVG MILE AND FORMATTING ----//
+          //---- FORMATTING AVG MILE ----//
           // dividing total seconds by total miles to get avg seconds/mile
           const avgSecondsMile = Math.floor(parseFloat(totalSeconds)/parseFloat(user.runStats[0].totalMiles));
           // converting seconds to MM:SS using secondsToFormat function
@@ -128,6 +136,8 @@ module.exports = {
           const longestRunTime = user.runStats[0].longestRunTime;
           const newlongestRunTime = secondsToFormat(longestRunTime);
           userData.runStats[0].longestRunTime = newlongestRunTime;
+
+          userData.runStats[0].fastestMile = user.runStats[0].fastestMile
 
           return userData;
         }
