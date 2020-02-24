@@ -127,8 +127,8 @@ module.exports = {
           userData.runStats[0].totalTime = newTotalTime;
 
           //---- FORMATTING AVG MILE ----//
-          // formatting avgMile seconds to MM:SS using secondsToFormat function
           const avgSecondsMile = user.runStats[0].avgMile;
+          // formatting avgMile seconds to MM:SS using secondsToFormat function
           const avgMileFormatted = secondsToFormat(avgSecondsMile);
           userData.runStats[0].avgMile = avgMileFormatted;
 

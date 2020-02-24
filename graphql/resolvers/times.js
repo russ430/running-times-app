@@ -134,10 +134,78 @@ module.exports = {
     },
     async deleteTime(_, { timeId }, context) {
       const user = checkAuth(context);
+      const { username } = user;
 
       try {
         const time = await Time.findById(timeId);
-        if(user.username === time.username) {
+        if(username === time.username) {
+
+          const foundUser = await User.findOne({ username });
+          const { runStats } = foundUser;
+
+          //---- UPDATING TOTAL MILES ----//
+          const { totalMiles } = runStats[0];
+          const updatedTotalMiles = parseFloat(totalMiles) - parseFloat(time.miles);
+
+          if(updatedTotalMiles <= 0) {
+            User.findOneAndUpdate({ username }, { 
+              $set: { runStats: { 
+                totalMiles: '0', 
+                totalTime: '0', 
+                avgMile: '0', 
+                longestRunTime: '0',
+                longestRunMiles: '0',
+                quickestPace: '0',
+                postedYet: false
+              }}}, 
+              { returnOriginal: false }, (err, doc) => {
+              if (err) {
+                console.log('something went wrong');
+              }
+              console.log(doc);
+            });
+          } else {
+            // TODO: double check why total time isn't working?
+            //---- UPDATING TOTAL TIME ----//
+            const { totalTime } = runStats[0];
+            const updatedTotalTime = parseFloat(totalTime) - parseFloat(toSeconds(time.time));
+  
+            //---- UPDATED AVG MILE ----//
+            const updatedAvgMile = updatedTotalTime/updatedTotalMiles;
+  
+            //---- UPDATING LONGEST RUN TIME ----//
+            const times = await Time.find({ username });
+            const newTimes = times.filter(time => timeId !== time.id);
+            const convTimes = newTimes.map(time => toSeconds(time.time))
+            const newLongestTime = Math.max(...convTimes);
+  
+            //---- UPDATING LONGEST RUN MILES ----//
+            const convMiles = newTimes.map(time => parseFloat(time.miles));
+            const newLongestMiles = Math.max(...convMiles);
+  
+            //---- UPDATING QUICKEST PACE ----//
+            const avgMilesArr = newTimes.map(time => toSeconds(time.time)/parseFloat(time.miles));
+            const quickestPace = Math.min(...avgMilesArr);
+  
+            //---- UPDATING USER DATA ----//
+            User.findOneAndUpdate({ username }, { 
+              $set: { runStats: { 
+                totalMiles: updatedTotalMiles, 
+                totalTime: updatedTotalTime, 
+                avgMile: updatedAvgMile, 
+                longestRunTime: newLongestTime,
+                longestRunMiles: newLongestMiles,
+                quickestPace,
+                postedYet: true
+              }}}, 
+              { returnOriginal: false }, (err, doc) => {
+              if (err) {
+                console.log('something went wrong');
+              }
+              console.log(doc);
+            });
+          }
+          
           await time.delete();
           return 'Post deleted successfully';
         } else {
