@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { Grid, Transition, Card } from 'semantic-ui-react';
+import { Grid, Transition, Card, Item } from 'semantic-ui-react';
 
 import { AuthContext } from '../context/auth';
 import TimeCard from '../components/TimeCard';
@@ -8,6 +8,7 @@ import PostForm from '../components/PostForm';
 import { FETCH_POSTS_QUERY } from '../util/graphql';
 import BasicStats from '../components/Profile/BasicStats';
 import PersonalBests from '../components/Profile/PersonalBests';
+import NewTimeCard from '../components/NewTimeCard';
 
 function Home() {
   const { user } = useContext(AuthContext);
@@ -42,11 +43,11 @@ function Home() {
             <Grid.Row >
               {loading ? <h1>Loading times...</h1> : (
                 <Transition.Group duration={200}>
+                     <Item.Group divided style={{ width: '95%', margin: '0 auto' }}>
                   {data.getTimes.map(time => (
-                    <Grid.Column key={time.id} style={{ marginBottom: '20px' }}>
-                      <TimeCard type="home" data={time} />
-                    </Grid.Column>
+                      <NewTimeCard key={time.id} type="home" data={time} />
                   ))}
+                </Item.Group>
                 </Transition.Group>
               )}
             </Grid.Row>

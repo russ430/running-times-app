@@ -1,0 +1,41 @@
+.avatar {
+  border-radius: 0.125rem;
+  border: none;
+  transition: filter 0.2s ease;
+}
+
+.figure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  
+  & img {
+    filter: blur(1px);
+  }
+  
+  &:hover img {
+    filter: blur(0);
+  }
+  
+  &:hover .caption {
+    opacity: 0;
+  }
+}
+
+.caption {
+  font-size: 8rem;
+  letter-spacing: -0.5rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #fff;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: opacity 0.2s ease;
+  padding-right: 1rem;
+  text-align: center;
+}
