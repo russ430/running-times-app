@@ -5,10 +5,6 @@
 }
 
 .figure {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
   overflow: hidden;
   
   & img {
@@ -30,11 +26,11 @@
   background-color: rgba(0, 0, 0, 0.1);
   color: #fff;
   margin: 0;
+  height: 150px;
+  width: 150px;
   position: absolute;
   top: 0;
-  bottom: 0;
   left: 0;
-  right: 0;
   transition: opacity 0.2s ease;
   padding-right: 1rem;
   text-align: center;

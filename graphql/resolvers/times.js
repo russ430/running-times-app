@@ -45,8 +45,6 @@ module.exports = {
 
       const foundUser = await User.findOne({ username });
 
-      //TODO: put the mile updates in its own resolver?
-
       //----UPDATING TOTAL MILEAGE ----//
       // grabbing the current total mileage
       const oldMiles = foundUser.runStats[0].totalMiles;

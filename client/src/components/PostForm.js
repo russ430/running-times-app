@@ -10,13 +10,15 @@ function PostForm(props) {
   const { values, submitHandler, changedInputHandler } = useForm(postTimeCallback, {
     time: '',
     miles: '',
-    body: ''
+    body: '',
+    maxLength: false
   });
 
   function resetForm() {
     values.time = '';
     values.miles = '';
     values.body = '';
+    values.maxLength = false;
   }
 
   const onFormSubmitHandler = event => {
@@ -82,6 +84,7 @@ function PostForm(props) {
             placeholder="Crushed it!"
             label="How'd it go?"
             name="body"
+            maxLength={126}
             onChange={changedInputHandler}
             value={values.body}
             />
@@ -90,6 +93,13 @@ function PostForm(props) {
           </Button>
         </Form.Field>
       </Form>
+      {values.maxLength && (
+        <div className="ui error message" style={{ marginBottom: '20px' }}>
+          <ul className="list">
+            <li>The max length of your description is 40 characters</li>
+          </ul>
+        </div>
+      )}
       {error && (
         <div className="ui error message" style={{ marginBottom: '20px' }}>
           <ul className="list">

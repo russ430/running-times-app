@@ -8,7 +8,8 @@ export const useForm = (callback, initialState = {}) => {
   const [values, setValues] = useState(initialState);
 
   const changedInputHandler = event => {
-    setValues({ ...values, [event.target.name]: event.target.value });
+    const maxLength = event.target.value.length === 126 ? true : false;
+    setValues({ ...values, [event.target.name]: event.target.value, maxLength });
   };
 
   const submitHandler = () => {

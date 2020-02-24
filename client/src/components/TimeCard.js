@@ -1,79 +1,50 @@
 import React, { useContext } from 'react';
-import { Card, Icon, Label, Image, Button } from 'semantic-ui-react';
-import moment from 'moment';
 import { Link } from 'react-router-dom';
+import { Item, Label } from 'semantic-ui-react';
+import styles from './TimeCard.module.scss';
+import moment from 'moment';
 
 import { AuthContext } from '../context/auth';
-import LikeButton from '../components/LikeButton';
+import LikeButton from './LikeButton';
+import CommentButton from './CommentButton';
 import DeleteButton from './DeleteButton';
-import MyPopup from '../util/MyPopup';
 
-function TimeCard({ type, data: { id, body, miles, time, username, likeCount, likes, commentCount, createdAt }}) {
-
+function NewTimeCard({ data: { id, body, miles, time, username, likeCount, likes, commentCount, createdAt }}) {
   const { user } = useContext(AuthContext);
 
+  const windowScroll = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
-    <>
-    {type === 'home' ? (
-        <Card fluid>
-        <Card.Content>
-          <Image
-            floated='right'
-            size='mini'
-            src='https://react.semantic-ui.com/images/avatar/large/molly.png'
-            />
-          <Card.Header as={Link} to={`/profile/${username}`}>{username}</Card.Header>
-          <Card.Meta as={Link} to={`/times/${id}`}>{moment(createdAt).format("ddd, h:mm a")}</Card.Meta>
-          <Card.Description>
-            <h3>{miles} miles in {time}</h3>
-            <p style={{ fontSize: "1.5rem" }}>{body}</p>
-          </Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          {/* passing the required props needed to create a like button from the destructured props */}
-          <LikeButton user={user} time={{ id, likes, likeCount }} />
-          <MyPopup content="Comment on post">
-            <Button labelPosition='right' as={Link} to={`/times/${id}`}>
-              <Button color='blue' basic>
-                <Icon name='comments' />
-              </Button>
-              <Label basic color='blue' pointing='left'>
-                {commentCount}
+    <Item>
+      <div className="ui small image" style={{ display: 'flex', alignItems: 'center' }}>
+        <Link to={`/profile/${username}`} className={styles.figure} onClick={windowScroll}>
+          <div style={{ position: 'relative' }}>
+            <img className={styles.avatar} src="https://react.semantic-ui.com/images/avatar/large/matthew.png" alt="avatar" />
+            <h2 className={styles.caption}>{miles}</h2>
+          </div>
+        </Link>
+      </div>
+      <Item.Content style={{ position: 'relative' }} verticalAlign="top">
+          <Link to={`/profile/${username}`} style={{ fontSize: '1.5rem', fontWeight: '600', color: '#000', display: 'block', margin: '0', padding: '0' }} onClick={windowScroll}>{username}</Link>
+          <p style={{ color: 'grey', fontWeight: '400', marginTop: '0.2rem', padding: '0' }}>{moment(createdAt).fromNow()}</p>
+          <p style={{ overflowWrap: 'break-word', fontSize: '1.4rem', padding: '0', margin: '1.5rem 0' }}>{body}</p>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div>
+              <Label size='big' color='blue' image>{miles} miles
+              <Label.Detail>{time}</Label.Detail>
               </Label>
-            </Button>
-          </MyPopup>
-          {/* checking to see if this post was made by this user,
-              posts can only be deleted by their own users */}
-          {user && user.username === username && <DeleteButton timeId={id} />}
-        </Card.Content>
-      </Card>
-    ) : (
-      <Card fluid>
-        <Card.Content> 
-          <Card.Header as={Link} to={`/times/${id}`}>{miles} miles in {time}</Card.Header>
-          <Card.Meta as={Link} to={`/times/${id}`}>{moment(createdAt).format("ddd, h:mm a")}</Card.Meta>
-          <Card.Description>
-            <p style={{ fontSize: "1.5rem" }}>{body}</p>
-          </Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          {/* passing the required props needed to create a like button from the destructured props */}
-          <LikeButton user={user} time={{ id, likes, likeCount }} />
-          <MyPopup content="Comment on post">
-            <Button labelPosition='right' as={Link} to={`/times/${id}`}>
-              <Button color='blue' basic>
-                <Icon name='comments' />
-              </Button>
-              <Label basic color='blue' pointing='left'>
-                {commentCount}
-              </Label>
-            </Button>
-          </MyPopup>
-        </Card.Content>
-      </Card>
-    )}
-    </>
+            </div>
+            <div>
+              <LikeButton user={user} time={{ id, likeCount, likes }}/>
+              <CommentButton data={{ commentCount, id }} />
+              {user && user.username === username && <DeleteButton timeId={id} />}
+            </div>
+          </div>
+      </Item.Content>
+    </Item>
   )
 };
 
-export default TimeCard;
+export default NewTimeCard;
