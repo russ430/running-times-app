@@ -5,6 +5,7 @@ export const FETCH_USER_DATA_QUERY = gql`
     getUserData(username: $username) {
       name
       createdAt
+      location
       runStats {
         totalMiles
         totalTime

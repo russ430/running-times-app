@@ -63,7 +63,7 @@ function ProfileBox({ username }) {
         <Card.Content extra>
           <div>
             <Icon name='map marker' />
-            Massachusetts
+            {userData.location}
           </div>
         </Card.Content>
       )}

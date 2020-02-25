@@ -59,9 +59,9 @@ module.exports = {
         token
       }
     },
-    async register(_, { registerInput: { name, username, email, password, confirmPassword }}) {
+    async register(_, { registerInput: { name, username, email, password, confirmPassword, location }}) {
       // Validate user data (make sure we don't have empty fields (password, email), passwords match)
-      const { valid, errors } = validateRegisterInput(name, username, email, password, confirmPassword);
+      const { valid, errors } = validateRegisterInput(name, username, email, password, confirmPassword, location);
       if(!valid) {
         throw new UserInputError('Errors', { errors });
       }
@@ -82,6 +82,7 @@ module.exports = {
         username,
         email,
         password,
+        location,
         createdAt: new Date().toISOString(),
         runStats: [{
           totalMiles: '0',
@@ -114,6 +115,7 @@ module.exports = {
           const userData = { runStats: [{}] };
           userData.name = user.name;
           userData.createdAt = user.createdAt;
+          userData.location = user.location
 
           // adding total miles to userData obj
           userData.runStats[0].totalMiles = user.runStats[0].totalMiles;

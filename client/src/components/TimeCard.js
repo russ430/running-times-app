@@ -22,7 +22,7 @@ function NewTimeCard({ data: { id, body, miles, time, username, likeCount, likes
         <Link to={`/profile/${username}`} className={styles.figure} onClick={windowScroll}>
           <div style={{ position: 'relative' }}>
             <img className={styles.avatar} src="https://react.semantic-ui.com/images/avatar/large/matthew.png" alt="avatar" />
-            <h2 className={styles.caption}>{miles}</h2>
+            <h2 className={styles.caption}>{miles.length < 2 ? miles : parseFloat(miles).toFixed(1)}</h2>
           </div>
         </Link>
       </div>

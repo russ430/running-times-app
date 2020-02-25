@@ -92,7 +92,7 @@ module.exports = {
 
       //---- CALCULATING QUICKEST PACE ----//
       const oldPace = foundUser.runStats[0].quickestPace;
-      const newPace = toSeconds(time);
+      const newPace = (toSeconds(time)/parseFloat(miles)).toFixed(0);
       const fastestPace = () => {
         if (newPace < oldPace || oldPace === '0') {
           return newPace;

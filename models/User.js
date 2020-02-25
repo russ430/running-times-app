@@ -6,6 +6,7 @@ const userSchema = new Schema({
   password: String,
   email: String,
   createdAt: String,
+  location: String,
   runStats: [
     {
       totalMiles: String,

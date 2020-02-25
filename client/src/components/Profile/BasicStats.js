@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { List } from 'semantic-ui-react';
+import { List, Placeholder } from 'semantic-ui-react';
 import { FETCH_USER_DATA_QUERY } from '../../util/graphql';
 
 function BasicStats({ refetchData, username }) {
@@ -49,7 +49,16 @@ function BasicStats({ refetchData, username }) {
           </List.Item>
         </List>
       ) : <h3>No stats yet</h3>
-      ) : <p>loading...</p>}
+      ) : (
+        <Placeholder>
+          <Placeholder.Line length="short"/>
+          <Placeholder.Line length="medium"/>
+          <Placeholder.Line length="short"/>
+          <Placeholder.Line length="medium"/>
+          <Placeholder.Line length="short"/>
+          <Placeholder.Line length="medium"/>
+        </Placeholder>
+      )}
     </>
   )
 };

@@ -15,10 +15,11 @@ function Register(props) {
     username: '',
     password: '',
     confirmPassword: '',
-    email: ''
-  }
+    email: '',
+    location: ''
+  };
 
-  const { changedInputHandler, onFormSubmitHandler, values } = useForm(registerUser, initialState)
+  const { changedInputHandler, submitHandler, values } = useForm(registerUser, initialState)
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     // the second argument in useMutation is an options object,
@@ -51,7 +52,7 @@ function Register(props) {
 
   return (
     <div className="form-container">
-      <Form onSubmit={onFormSubmitHandler} noValidate className={loading ? "loading" : ''}>
+      <Form onSubmit={submitHandler} noValidate className={loading ? "loading" : ''}>
         <h1>Register</h1>
         <Form.Input
           type="text"
@@ -98,6 +99,15 @@ function Register(props) {
           error={errors.confirmPassword ? true : false}
           onChange={changedInputHandler}
         />
+        <Form.Input
+          type="location"
+          label="Location"
+          placeholder="Anywhere, USA"
+          name="location"
+          value={values.location}
+          error={errors.location ? true : false}
+          onChange={changedInputHandler}
+        />
         <Button type="submit" primary>Submit</Button>
       </Form>
         {Object.keys(errors).length > 0 && (
@@ -119,6 +129,7 @@ const REGISTER_USER = gql`
     $email: String!
     $password: String!
     $confirmPassword: String!
+    $location: String!
   ) {
     register(
       registerInput: {
@@ -127,6 +138,7 @@ const REGISTER_USER = gql`
         password: $password
         confirmPassword: $confirmPassword
         email: $email
+        location: $location
       }
     ){
       id
@@ -135,6 +147,7 @@ const REGISTER_USER = gql`
       name
       username
       createdAt
+      location
       token
     }
   }

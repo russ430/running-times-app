@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { Grid, Transition, Card, Item, Placeholder } from 'semantic-ui-react';
+import { Grid, Transition, Card, Item, Loader } from 'semantic-ui-react';
 
 import { AuthContext } from '../context/auth';
 import PostForm from '../components/PostForm';
@@ -40,7 +40,7 @@ function Home() {
               <h1>Recent Times</h1>
             </Grid.Row>
             <Grid.Row >
-              {loading ? <h1>Loading times...</h1> : (
+              {loading ? <Loader style={{ marginTop: '4rem' }} active inline="centered" size="big" /> : (
                 <Transition.Group animation='fade' as={Item.Group} divided duration={200} style={{ width: '95%', margin: '0 auto' }}>
                   {data.getTimes.map(time => (
                     <TimeCard key={time.id} type="home" data={time} />
