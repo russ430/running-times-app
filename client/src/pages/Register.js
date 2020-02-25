@@ -1,14 +1,16 @@
 import React, { useState, useContext } from 'react';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Modal, Image, Header } from 'semantic-ui-react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import { AuthContext } from '../context/auth';
 import { useForm } from '../util/hooks';
+import AvatarSelection from '../components/Register/AvatarSelection';
 
 function Register(props) {
   const context = useContext(AuthContext)
   const [errors, setErrors] = useState({});
+  const [showModal, setShowModal] = useState(false);
 
   const initialState = {
     name: '',
@@ -16,7 +18,8 @@ function Register(props) {
     password: '',
     confirmPassword: '',
     email: '',
-    location: ''
+    location: '',
+    avatar: ''
   };
 
   const { changedInputHandler, submitHandler, values } = useForm(registerUser, initialState)
@@ -108,6 +111,14 @@ function Register(props) {
           error={errors.location ? true : false}
           onChange={changedInputHandler}
         />
+        <Modal open={showModal}>
+          <Modal.Header>Select an Avatar</Modal.Header>
+          <Modal.Content style={{ display: 'flex', flexWrap: 'wrap' }}>
+            <AvatarSelection changed={changedInputHandler} />
+            <Button primary onClick={() => setShowModal(false)}>Select</Button>
+          </Modal.Content>
+        </Modal>
+        <Button type="button" onClick={() => setShowModal(true)}>Select Avatar</Button>
         <Button type="submit" primary>Submit</Button>
       </Form>
         {Object.keys(errors).length > 0 && (

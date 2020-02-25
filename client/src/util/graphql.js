@@ -6,6 +6,7 @@ export const FETCH_USER_DATA_QUERY = gql`
       name
       createdAt
       location
+      avatar
       runStats {
         totalMiles
         totalTime

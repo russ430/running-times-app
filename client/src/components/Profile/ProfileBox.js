@@ -4,6 +4,7 @@ import { Card, Image, Icon, Placeholder } from 'semantic-ui-react';
 import { FETCH_USER_DATA_QUERY } from '../../util/graphql';
 import moment from 'moment';
 
+import avatars from '../avatars';
 import BasicStats from './BasicStats';
 
 function ProfileBox({ username }) {
@@ -22,7 +23,7 @@ function ProfileBox({ username }) {
         <Placeholder>
           <Placeholder.Image square />
         </Placeholder>
-      ) : <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} /> }
+      ) : <Image src={avatars[userData.avatar]} wrapped ui={false} /> }
       <Card.Content>
         {loading ? (
           <Placeholder>

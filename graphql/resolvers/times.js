@@ -39,6 +39,11 @@ module.exports = {
       const user = checkAuth(context);
       const { username } = user;
 
+      const testRegEx = /^(\d\d||\d):\d\d/;
+      if (!testRegEx.test(time)) {
+        throw new Error('Time must be numbers only and in MM:SS format');
+      }
+
       if (time.trim() === '' || miles.trim() === '') {
         throw new Error('Time and Mileage must not be empty')
       }
@@ -186,7 +191,7 @@ module.exports = {
   
             //---- UPDATING QUICKEST PACE ----//
             const avgMilesArr = newTimes.map(time => toSeconds(time.time)/parseFloat(time.miles));
-            const quickestPace = Math.min(...avgMilesArr);
+            const quickestPace = Math.min(...avgMilesArr).toFixed(0);
   
             //---- UPDATING USER DATA ----//
             User.findOneAndUpdate({ username }, { 

@@ -17,6 +17,11 @@ function Home() {
   return (
     <>
     <Grid centered columns={2}>
+      {!user && (
+        <div>
+          hi
+        </div>
+      )}
       {user && (
           <Grid.Column width={4}>
             <Grid.Row>

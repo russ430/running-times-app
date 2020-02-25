@@ -4,7 +4,8 @@ module.exports.validateRegisterInput = (
   email,
   password,
   confirmPassword,
-  location
+  location,
+  avatar
 ) => {
   const errors = {};
   if (name.trim() === '') {
@@ -27,7 +28,10 @@ module.exports.validateRegisterInput = (
     errors.confirmPassword = 'Passwords must match';
   }
   if (location === '') {
-    errors.location = 'Location must not be empty'
+    errors.location = 'Location must not be empty';
+  }
+  if (avatar === '') {
+    errors.avatar = 'An avatar must be selected';
   }
 
   return{

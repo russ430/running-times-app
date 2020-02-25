@@ -8,7 +8,10 @@ export const useForm = (callback, initialState = {}) => {
   const [values, setValues] = useState(initialState);
 
   const changedInputHandler = event => {
-    const maxLength = event.target.value.length === 126 ? true : false;
+    let maxLength;
+    if (event.target.name === 'body') {
+      maxLength = event.target.value.length === 126 ? true : false;
+    }
     setValues({ ...values, [event.target.name]: event.target.value, maxLength });
   };
 

@@ -42,6 +42,7 @@ module.exports = gql`
     username: String!
     createdAt: String!
     location: String!
+    avatar: String!
     runStats: [Stats]
   }
   input RegisterInput {
@@ -51,6 +52,7 @@ module.exports = gql`
     confirmPassword: String!
     email: String!
     location: String!
+    avatar: String!
   }
   type Query {
     getTimes: [Time]
