@@ -15,7 +15,8 @@ function LikeButton({ user,  time: { id, likeCount, likes } }) {
   }, [user, likes]);
 
   const [likeTime] = useMutation(LIKE_TIME_MUTATION, {
-    variables: { timeId: id }
+    variables: { timeId: id },
+    onError: error => console.log(error)
   });
 
   const likeButton = user ? (

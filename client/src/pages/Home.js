@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { Grid, Transition, Card, Item } from 'semantic-ui-react';
+import { Grid, Transition, Card, Item, Placeholder } from 'semantic-ui-react';
 
 import { AuthContext } from '../context/auth';
 import PostForm from '../components/PostForm';

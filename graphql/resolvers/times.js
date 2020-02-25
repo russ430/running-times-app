@@ -145,9 +145,9 @@ module.exports = {
 
           //---- UPDATING TOTAL MILES ----//
           const { totalMiles } = runStats[0];
-          const updatedTotalMiles = parseFloat(totalMiles) - parseFloat(time.miles);
+          const updatedTotalMiles = (parseFloat(totalMiles) - parseFloat(time.miles)).toFixed(0);
 
-          if(updatedTotalMiles <= 0) {
+          if (updatedTotalMiles <= 0) {
             User.findOneAndUpdate({ username }, { 
               $set: { runStats: { 
                 totalMiles: '0', 
@@ -165,13 +165,14 @@ module.exports = {
               console.log(doc);
             });
           } else {
-            // TODO: double check why total time isn't working?
+
+
             //---- UPDATING TOTAL TIME ----//
             const { totalTime } = runStats[0];
             const updatedTotalTime = parseFloat(totalTime) - parseFloat(toSeconds(time.time));
   
             //---- UPDATED AVG MILE ----//
-            const updatedAvgMile = updatedTotalTime/updatedTotalMiles;
+            const updatedAvgMile = (updatedTotalTime/updatedTotalMiles).toFixed(0);
   
             //---- UPDATING LONGEST RUN TIME ----//
             const times = await Time.find({ username });
