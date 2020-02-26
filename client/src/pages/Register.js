@@ -56,7 +56,7 @@ function Register(props) {
   return (
     <div className="form-container">
       <Form onSubmit={submitHandler} noValidate className={loading ? "loading" : ''}>
-        <h1>Register</h1>
+        <h1>Create a New Account</h1>
         <Form.Input
           type="text"
           label="Name"

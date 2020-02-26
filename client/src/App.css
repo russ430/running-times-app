@@ -6,8 +6,8 @@
   max-width: 1200px;
   margin: 0 auto;
   background-color: white;
-  padding: 2rem;
   overflow: hidden;
+  padding: 2rem;
 }
 
 .page-title {
@@ -17,7 +17,6 @@
 
 .form-container {
   width: 400px;
-  margin: 20px auto;
 }
 
 .ui.teal.button:focus,
