@@ -42,7 +42,7 @@ module.exports = gql`
     username: String!
     createdAt: String!
     location: String!
-    avatar: String!
+    avatar: Int!
     runStats: [Stats]
   }
   input RegisterInput {

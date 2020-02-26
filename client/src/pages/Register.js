@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Form, Button, Modal, Image, Header } from 'semantic-ui-react';
+import { Form, Button, Modal } from 'semantic-ui-react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
@@ -34,7 +34,7 @@ function Register(props) {
       context.login(userData)
       props.history.push('/')
     },
-    onError(err){
+    onError: (err) => {
       // graphQLErrors will return an array with multiple error objects
       // however our server code only returns one error object
       // therefore we only need to access the graphQLErrors array at index 0
@@ -51,7 +51,7 @@ function Register(props) {
   // before initialization
   function registerUser() {
     addUser();
-  }
+  };
 
   return (
     <div className="form-container">
@@ -103,7 +103,7 @@ function Register(props) {
           onChange={changedInputHandler}
         />
         <Form.Input
-          type="location"
+          type="text"
           label="Location"
           placeholder="Anywhere, USA"
           name="location"
@@ -114,12 +114,12 @@ function Register(props) {
         <Modal open={showModal}>
           <Modal.Header>Select an Avatar</Modal.Header>
           <Modal.Content style={{ display: 'flex', flexWrap: 'wrap' }}>
-            <AvatarSelection changed={changedInputHandler} />
+            <AvatarSelection checked={values.avatar} changed={changedInputHandler} />
             <Button primary onClick={() => setShowModal(false)}>Select</Button>
           </Modal.Content>
         </Modal>
-        <Button type="button" onClick={() => setShowModal(true)}>Select Avatar</Button>
-        <Button type="submit" primary>Submit</Button>
+        <Button type="button" color={errors.avatar ? "red" : "teal"} onClick={() => setShowModal(true)} style={{ display: 'block', margin: '0.5rem 0' }}>Select Avatar</Button>
+        <Button type="submit" primary style={{ margin: '0.5rem 0'}}>Submit</Button>
       </Form>
         {Object.keys(errors).length > 0 && (
           <div className="ui error message">
@@ -141,6 +141,7 @@ const REGISTER_USER = gql`
     $password: String!
     $confirmPassword: String!
     $location: String!
+    $avatar: String!
   ) {
     register(
       registerInput: {
@@ -150,6 +151,7 @@ const REGISTER_USER = gql`
         confirmPassword: $confirmPassword
         email: $email
         location: $location
+        avatar: $avatar
       }
     ){
       id

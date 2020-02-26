@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';
-import { Item, Label } from 'semantic-ui-react';
+import { Item, Label, Loader } from 'semantic-ui-react';
 import styles from './TimeCard.module.scss';
 import moment from 'moment';
 
@@ -24,7 +24,7 @@ function TimeCard({ data: { id, body, miles, time, username, likeCount, likes, c
 
   return (
     <Item>
-      {!data ? <h1>Loading...</h1> : (
+      {!data ? <Loader size="big" inline="centered" /> : (
         <>
         <div className="ui small image" style={{ display: 'flex', alignItems: 'center' }}>
           <Link to={`/profile/${username}`} className={styles.figure} onClick={windowScroll}>
