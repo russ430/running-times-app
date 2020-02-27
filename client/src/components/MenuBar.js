@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, } from 'semantic-ui-react';
+import { Menu, Input, } from 'semantic-ui-react';
 
 import { AuthContext } from '../context/auth';
 
@@ -31,8 +31,8 @@ function MenuBar() {
         />
       ) : null}
       <Menu.Menu position='right'>
-        {/* if the user is logged in render just a logged out button.
-        if the user is logged out render the login and register buttons */}
+        {/* if the user is logged in, render a log out button.
+        if the user is logged out, render the login fields */}
         {user ? (
           <Menu.Item
             name='logout'

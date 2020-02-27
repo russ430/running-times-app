@@ -44,8 +44,8 @@ module.exports = {
         throw new Error('Time must be numbers only and in MM:SS format');
       }
 
-      if (time.trim() === '' || miles.trim() === '') {
-        throw new Error('Time and Mileage must not be empty')
+      if (time.trim() === '' || miles.trim() === '' || body.trim() === '') {
+        throw new Error("Time, Mileage and/or How'd it go? must not be empty")
       }
 
       const foundUser = await User.findOne({ username });

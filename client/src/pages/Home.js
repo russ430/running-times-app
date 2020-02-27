@@ -15,6 +15,11 @@ function Home() {
   const [refetchData, setRefetchData] = useState(false);
   const { loading, data } = useQuery(FETCH_POSTS_QUERY);
 
+  let firstSixTimes;
+  if (data) {
+    firstSixTimes = data.getTimes.slice(0, 6);
+  }
+
   return (
     <>
     <Grid centered columns={2}>
@@ -22,7 +27,7 @@ function Home() {
         <header style={{ padding: '2rem 0 6rem 1rem', display: 'flex', textAlign: 'left' }}>
           <div style={{ width: '45%', margin: '0 auto' }}>
             <h1 style={{ textAlign: 'center', fontWeight: '400', fontSize: '5rem'}}>We Run Here.</h1>
-            <h2 style={{ textAlign: 'left', fontWeight: '400' }}>Whether you're a lifelong runner or just getting started, you're welcome here!</h2>
+            <h2 style={{ textAlign: 'left', fontWeight: '400' }}>Whether you're a lifelong runner or just getting started, welcome to our network!</h2>
             <div style={{ display: 'flex', justifyContent: 'center', width: '90%', margin: '0 auto' }}>
               <div>
                 <Icon name="clipboard list" size="massive" color="blue" style={{ margin: '2rem 0' }}/>
@@ -35,7 +40,7 @@ function Home() {
                 </div>
                 <div style={{ margin: '5rem 0 0 0' }}>
                   <h3 style={{ fontSize: '2rem', padding: '0', margin: '0' }}>Personal Bests</h3>
-                  <p style={{ fontSize: '1.2rem', padding: '0', margin: '0.5rem 0 0 0' }}>Everytime you hit a new personal best you'll see it on your profile!</p>
+                  <p style={{ fontSize: '1.2rem', padding: '0', margin: '0.5rem 0 0 0' }}>Everytime you hit a new personal best everyone will see it on your profile!</p>
                 </div>
               </div>  
             </div>
@@ -66,12 +71,12 @@ function Home() {
         <Grid.Column width={12}>
           <Grid columns={3}>
             <Grid.Row className="page-title">
-              <h1>Recent Times</h1>
+              <h1>Recent Activity</h1>
             </Grid.Row>
             <Grid.Row >
               {loading ? <Loader style={{ marginTop: '4rem' }} active inline="centered" size="big" /> : (
                 <Transition.Group animation='fade' as={Item.Group} divided duration={200} style={{ width: '95%', margin: '0 auto' }}>
-                  {data.getTimes.map(time => (
+                  {firstSixTimes.map(time => (
                     <TimeCard key={time.id} type="home" data={time} />
                   ))}
                 </Transition.Group>

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useRef } from 'react';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Grid, Card, Form, Item } from 'semantic-ui-react';
+import { Grid, Card, Form, Item, Loader } from 'semantic-ui-react';
 import moment from 'moment';
 
 import { AuthContext } from '../context/auth';
@@ -40,7 +40,7 @@ function SingleTime(props) {
 
   if(loading) {
     return (
-      <h1>Loading...</h1>
+      <Loader size="big" inline="centered" />
     )
   } else {
     const { id, comments } = data.getTime;

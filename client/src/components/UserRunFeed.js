@@ -20,7 +20,7 @@ function UserRunFeed({ username }) {
         {!data ? <Loader size="big" active inline="centered" style={{ marginTop: '6rem' }} /> : (
           <Transition.Group as={Item.Group} divided duration={200} style={{ width: '95%', margin: '0 auto' }}>
             {allRuns.map(time => (
-              <TimeCard type="profile" key={time.id} type="profile" data={time} />
+              <TimeCard type="profile" key={time.id} data={time} />
             ))}
           </Transition.Group>
         )}
