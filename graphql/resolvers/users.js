@@ -63,7 +63,6 @@ module.exports = {
       // Validate user data (make sure we don't have empty fields (password, email), passwords match)
       const { valid, errors } = validateRegisterInput(name, username, email, password, confirmPassword, location, avatar);
       if(!valid) {
-        console.log(errors);
         throw new UserInputError('Errors', { errors });
       }
       // make sure user doesn't already exist

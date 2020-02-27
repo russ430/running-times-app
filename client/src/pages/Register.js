@@ -89,6 +89,7 @@ function Register(props) {
           label="Password"
           placeholder="Password"
           name="password"
+          maxLength="16"
           value={values.password}
           error={errors.password ? true : false}
           onChange={changedInputHandler}
@@ -98,6 +99,7 @@ function Register(props) {
           label="Confirm Password"
           placeholder="Confirm Password"
           name="confirmPassword"
+          maxLength="16"
           value={values.confirmPassword}
           error={errors.confirmPassword ? true : false}
           onChange={changedInputHandler}

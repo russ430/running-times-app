@@ -11,8 +11,14 @@ module.exports.validateRegisterInput = (
   if (name.trim() === '') {
     errors.name = 'Name must not be empty';
   };
+  if (name.length > 20) {
+    errors.nameLength = 'Name must not be longer than 20 characters'
+  }
   if (username.trim() === '') {
     errors.username = 'Username must not be empty';
+  } 
+  if (username.length > 10) {
+    errors.usernameLength = 'Username must not be longer than 10 characters';
   };
   if (email.trim() === '') {
     errors.email = 'Email must not be empty';
@@ -30,6 +36,9 @@ module.exports.validateRegisterInput = (
   if (location === '') {
     errors.location = 'Location must not be empty';
   };
+  if (location.length > 20) {
+    errors.locationLength = 'Location must not be longer than 20 characters'
+  }
   if (avatar === '') {
     errors.avatar = 'An avatar must be selected';
   };
