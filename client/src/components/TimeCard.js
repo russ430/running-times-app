@@ -12,7 +12,7 @@ import DeleteButton from './DeleteButton';
 import avatars from './avatars';
 import { FETCH_USER_DATA_QUERY } from '../util/graphql';
 
-function TimeCard({ data: { id, body, miles, time, username, likeCount, likes, commentCount, createdAt }}) {
+function TimeCard({ type, data: { id, body, miles, time, username, likeCount, likes, commentCount, createdAt }}) {
   const { user } = useContext(AuthContext);
   const { data } = useQuery(FETCH_USER_DATA_QUERY, { 
     variables: { username }
@@ -27,10 +27,10 @@ function TimeCard({ data: { id, body, miles, time, username, likeCount, likes, c
       {!data ? <Loader size="big" inline="centered" /> : (
         <>
         <div className="ui small image" style={{ display: 'flex', alignItems: 'center' }}>
-          <Link to={`/profile/${username}`} className={styles.figure} onClick={windowScroll}>
+          <Link to={`/profile/${username}`} className={styles.figure} style={ type === 'profile' ? null : { overflow: 'hidden' } }onClick={windowScroll}>
             <div style={{ position: 'relative' }}>
-              <img className={styles.avatar} src={avatars[data.getUserData.avatar]} alt="avatar" />
-              <h2 className={styles.caption}>{miles.length < 2 ? miles : parseFloat(miles).toFixed(1)}</h2>
+              {type === 'profile' ? null : <img className={styles.avatar} src={avatars[data.getUserData.avatar]} alt="avatar" />}
+              <h2 className={styles.caption} style={ type === 'profile' ? { color: '#000' } : { color: '#fff', position: 'absolute', backgroundColor: 'rgba(0, 0, 0, 0.1)' }} >{miles.length < 2 ? miles : parseFloat(miles).toFixed(1)}</h2>
             </div>
           </Link>
         </div>

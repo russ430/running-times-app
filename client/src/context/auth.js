@@ -5,14 +5,15 @@ const initialState = {
   user: null
 }
 
+// if there is a token to be found (meaning the user has signed in)
 if (localStorage.getItem('jwtToken')) {
   // the jwt token holds in its value when the token expires
   // we must use a decoder (jwtDecode) in order to retrieve the expiration time
   const token = localStorage.getItem('jwtToken')
   const decodedToken = jwtDecode(token);
 
-  // if the decoded token is smaller/older than the current time then
-  // the token is expired and will be removed-- the user will be logged out (user will be set to null)
+  // if the decoded token is smaller (older) than the current time then
+  // the token is expired and will be removed-- the user will be logged out (user in state will be set to null)
   // (expiration time is stored in EPOCH time in the exp of decoded token)
   if (decodedToken.exp * 1000 < Date.now()) {
     localStorage.removeItem('jwtToken');
@@ -53,7 +54,7 @@ function AuthProvider(props) {
   function login(userData) {
     // this stores the user token after logging in to the local storage on the browser
     // this ensures that when the page refreshes or reloads the user stays logged in
-    // the first argument for 'setItem' is the string name, and the second the actual item
+    // the first argument for 'setItem' is the string name, and the second the actual item/value
     localStorage.setItem("jwtToken", userData.token);
 
     dispatch({

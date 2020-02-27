@@ -41,7 +41,7 @@ function Home() {
             </div>
             <h2 style={{ marginTop: '3rem', fontStyle: 'italic', textAlign: 'left', fontWeight: '400' }}>We look forward to meeting you! Scroll down below to see what our community has been up to...</h2>
           </div>
-        <div style={{ width: '45%', marginLeft: '0 auto', paddingLeft: '5rem', paddingTop: '2rem' }}>
+        <div style={{ width: '45%', marginLeft: '0 auto', paddingTop: '2rem' }}>
           <Register />
         </div>
       </header>

@@ -17,6 +17,7 @@
 
 .form-container {
   width: 400px;
+  margin: 0 auto;
 }
 
 .ui.teal.button:focus,

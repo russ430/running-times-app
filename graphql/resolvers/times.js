@@ -39,7 +39,7 @@ module.exports = {
       const user = checkAuth(context);
       const { username } = user;
 
-      const testRegEx = /^(\d\d||\d):\d\d/;
+      const testRegEx = /^(\d\d||\d):[0-5]\d/;
       if (!testRegEx.test(time)) {
         throw new Error('Time must be numbers only and in MM:SS format');
       }
@@ -54,7 +54,7 @@ module.exports = {
       // grabbing the current total mileage
       const oldMiles = foundUser.runStats[0].totalMiles;
       // converting strings to floats and adding the old total to the new total
-      const newTotalMiles = parseFloat(oldMiles) + parseFloat(miles);
+      const newTotalMiles = (parseFloat(oldMiles) + parseFloat(miles)).toFixed(1);
 
       //---- UPDATING TOTAL TIME ----//
       // grabbing the current total time

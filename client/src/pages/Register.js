@@ -115,6 +115,8 @@ function Register(props) {
           <Modal.Header>Select an Avatar</Modal.Header>
           <Modal.Content style={{ display: 'flex', flexWrap: 'wrap' }}>
             <AvatarSelection checked={values.avatar} changed={changedInputHandler} />
+          </Modal.Content>
+          <Modal.Content>
             <Button primary onClick={() => setShowModal(false)}>Select</Button>
           </Modal.Content>
         </Modal>
