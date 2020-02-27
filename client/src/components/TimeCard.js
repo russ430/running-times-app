@@ -35,7 +35,7 @@ function TimeCard({ type, data: { id, body, miles, time, username, likeCount, li
           </Link>
         </div>
         <Item.Content style={{ position: 'relative' }} verticalAlign="top">
-            <Link to={`/profile/${username}`} style={{ fontSize: '1.5rem', fontWeight: '600', color: '#000', display: 'block', margin: '0', padding: '0' }} onClick={windowScroll}>{username}</Link>
+            <Link to={`/profile/${username}`} style={{ fontSize: '1.5rem', fontWeight: '600', color: '#000', display: 'block', margin: '0', padding: '0' }} onClick={windowScroll}>{type === 'profile' ? data.getUserData.name : username}</Link>
             <p style={{ color: 'grey', fontWeight: '400', marginTop: '0.2rem', padding: '0' }}>{moment(createdAt).fromNow()}</p>
             <p style={{ overflowWrap: 'break-word', fontSize: '1.4rem', padding: '0', margin: '1.5rem 0' }}>{body}</p>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

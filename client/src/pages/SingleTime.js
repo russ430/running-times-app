@@ -34,10 +34,6 @@ function SingleTime(props) {
     }
   })
 
-  function deleteTimeCallback() {
-    props.history.push('/');
-  }
-
   if(loading) {
     return (
       <Loader size="big" inline="centered" />

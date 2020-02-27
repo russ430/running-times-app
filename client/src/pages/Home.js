@@ -27,7 +27,7 @@ function Home() {
         <header style={{ padding: '2rem 0 6rem 1rem', display: 'flex', textAlign: 'left' }}>
           <div style={{ width: '45%', margin: '0 auto' }}>
             <h1 style={{ textAlign: 'center', fontWeight: '400', fontSize: '5rem'}}>We Run Here.</h1>
-            <h2 style={{ textAlign: 'left', fontWeight: '400' }}>Whether you're a lifelong runner or just getting started, welcome to our network!</h2>
+            <h2 style={{ textAlign: 'left', fontWeight: '400' }}>Whether you're a lifelong runner or just getting started, welcome to your new home for all things running!</h2>
             <div style={{ display: 'flex', justifyContent: 'center', width: '90%', margin: '0 auto' }}>
               <div>
                 <Icon name="clipboard list" size="massive" color="blue" style={{ margin: '2rem 0' }}/>
@@ -44,7 +44,7 @@ function Home() {
                 </div>
               </div>  
             </div>
-            <h2 style={{ marginTop: '3rem', fontStyle: 'italic', textAlign: 'left', fontWeight: '400' }}>We look forward to meeting you! Scroll down below to see what our community has been up to...</h2>
+            <h2 style={{ marginTop: '3rem', fontStyle: 'italic', textAlign: 'left', fontWeight: '400' }}>We look forward to meeting you! Scroll down below to see what our community has been up to and click on a username or picture to see their profile!</h2>
           </div>
         <div style={{ width: '45%', marginLeft: '0 auto', paddingTop: '2rem' }}>
           <Register />
@@ -68,7 +68,7 @@ function Home() {
             </Grid.Row>
           </Grid.Column>
         )}
-        <Grid.Column width={12}>
+        <Grid.Column width={12} style={{ paddingBottom: '6rem' }}>
           <Grid columns={3}>
             <Grid.Row className="page-title">
               <h1>Recent Activity</h1>

@@ -13,6 +13,7 @@ import Register from './pages/Register';
 import MenuBar from './components/MenuBar';
 import SingleTime from './pages/SingleTime';
 import Profile from './pages/Profile';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route exact path="/times/:timeId" component={SingleTime } />
           </div>
         </div>
+        <Footer />
       </Router>
     </AuthProvider>
   );
