@@ -9,7 +9,9 @@ A social networking web ap for runners! Input your recent running times and they
 ## Built With
 
 * [React](http://reactjs.org/) - Javascript library
-* [npm](https://npmjs.com/) - Dependency Management
+* [GraphQL](https://graphql.org)
+* [Apollo](https://apollographql.com)
+* [NodeJs](https://nodejs.org)
 * [semantic-ui](https://react.semantic-ui.com/) - Used for styling
 
 ## Authors
