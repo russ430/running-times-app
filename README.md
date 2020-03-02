@@ -2,6 +2,10 @@
 
 A social networking web ap for runners! Input your recent running times and they will be posted to a live feed on your home page. After posting your time your stats will be updated and shown on your profile along with any personal bests that you've achieved.
 
+## Live Demo
+
+[WeRunHere](https://bit.ly/we-run-here)
+
 ## Built With
 
 * [React](http://reactjs.org/) - Javascript library
@@ -10,7 +14,7 @@ A social networking web ap for runners! Input your recent running times and they
 
 ## Authors
 
-* **Alex Russian** - *Initial work* - [WeRunHere](https://bit.ly/we-run-here)
+* **Alex Russian**
 
 
 ## License
