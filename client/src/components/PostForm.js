@@ -2,17 +2,20 @@ import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { Form, Button } from 'semantic-ui-react';
 import gql from 'graphql-tag';
-import { FETCH_POSTS_QUERY } from '../util/graphql';
 
+import { FETCH_POSTS_QUERY } from '../util/graphql';
 import { useForm } from '../util/hooks';
 
-function PostForm(props) {
-  const { values, submitHandler, changedInputHandler } = useForm(postTimeCallback, {
-    time: '',
-    miles: '',
-    body: '',
-    maxLength: false
-  });
+export default function PostForm(props) {
+  const { values, submitHandler, changedInputHandler } = useForm(
+    postTimeCallback,
+    {
+      time: '',
+      miles: '',
+      body: '',
+      maxLength: false,
+    },
+  );
 
   function resetForm() {
     values.time = '';
@@ -25,7 +28,7 @@ function PostForm(props) {
     event.preventDefault();
     submitHandler();
     props.onSubmitHandler();
-  }
+  };
 
   const [postTime, { error }] = useMutation(POST_TIME_MUTATION, {
     update(proxy, result) {
@@ -38,22 +41,22 @@ function PostForm(props) {
       // by putting this data we've retrieved from the cache in a variable, we have access to it.
       // TL;DR = proxy.readQuery is directly accessing the current cache
       const data = proxy.readQuery({
-        query: FETCH_POSTS_QUERY
+        query: FETCH_POSTS_QUERY,
       });
       // in order to persist our data into the cache we must write it into the cache using the
       // 'writeQuery' function and then accessing the getTimes query and adding our new post
       // to the front of the array and spreading the rest of it afterward
-      proxy.writeQuery({ 
+      proxy.writeQuery({
         query: FETCH_POSTS_QUERY,
         data: {
-          getTimes: [result.data.postTime, ...data.getTimes]
-        }
+          getTimes: [result.data.postTime, ...data.getTimes],
+        },
       });
       resetForm();
     },
     variables: values,
-    onError: (error) => null
-  })
+    onError: error => null,
+  });
 
   function postTimeCallback() {
     postTime();
@@ -61,14 +64,14 @@ function PostForm(props) {
 
   return (
     <>
-      <Form onSubmit={onFormSubmitHandler}>
+      <Form style={{ width: '100%' }} onSubmit={onFormSubmitHandler}>
         <h2>Post a new time:</h2>
         <Form.Field>
           <Form.Input
             placeholder="MM:SS"
             label="Time"
             name="time"
-            error={error ? true : false}
+            error={!!error}
             onChange={changedInputHandler}
             value={values.time}
           />
@@ -76,7 +79,7 @@ function PostForm(props) {
             placeholder="26.2"
             label="Mileage"
             name="miles"
-            error={error ? true : false}
+            error={!!error}
             onChange={changedInputHandler}
             value={values.miles}
           />
@@ -87,7 +90,7 @@ function PostForm(props) {
             maxLength={126}
             onChange={changedInputHandler}
             value={values.body}
-            />
+          />
           <Button type="submit" color="teal">
             Submit
           </Button>
@@ -108,11 +111,11 @@ function PostForm(props) {
         </div>
       )}
     </>
-  )
-};
+  );
+}
 
 const POST_TIME_MUTATION = gql`
-  mutation postTime($time: String!, $miles: String! $body: String!) {
+  mutation postTime($time: String!, $miles: String!, $body: String!) {
     postTime(time: $time, miles: $miles, body: $body) {
       id
       time
@@ -136,5 +139,3 @@ const POST_TIME_MUTATION = gql`
     }
   }
 `;
-
-export default PostForm;

@@ -9,6 +9,17 @@ import leaves from '../assets/white-orange-leaves400.png';
 import redNikes from '../assets/white-red-nikes-field400.png';
 import orangeBoots from '../assets/orange-boots400.png';
 
-const avatars = [snow, boots, colorful, turf, oldConverse, redYellow, lounging, leaves, redNikes, orangeBoots];
+const avatars = [
+  snow,
+  boots,
+  colorful,
+  turf,
+  oldConverse,
+  redYellow,
+  lounging,
+  leaves,
+  redNikes,
+  orangeBoots,
+];
 
 export default avatars;

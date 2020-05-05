@@ -1,63 +1,53 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu } from 'semantic-ui-react';
+import styled from 'styled-components';
 
 import { AuthContext } from '../context/auth';
 
-function MenuBar() {
+export default function MenuBar() {
   const { user, logout } = useContext(AuthContext);
 
-  const pathname = window.location.pathname;
-  
-  const path = pathname === '/' ? 'home' : pathname.substr(1);
-  const [activeItem, setActiveItem] = useState(path);
-
-  const handleItemClick = (e, { name }) => setActiveItem(name);
-
   return (
-    <Menu style={{ padding: '0 4rem', margin: '0' }} inverted size="large" color="teal">
-      <Menu.Item
-        name='home'
-        as={Link}
-        to='/'
-        onClick={handleItemClick}
-      />
-      {user ? (
-        <Menu.Item
-          name="my profile"
-          as={Link}
-          to={`/profile/${user.username}`}
-          onClick={handleItemClick}
-        />
-      ) : null}
-      <Menu.Menu position='right'>
-        {/* if the user is logged in, render a log out button.
-        if the user is logged out, render the login fields */}
+    <Menu>
+      <div style={{ padding: '1rem 0' }}>
+        <MenuItem to="/">Home</MenuItem>
         {user ? (
-          <Menu.Item
-            name='logout'
-            onClick={logout}
-          />
+          <MenuItem to={`/profile/${user.username}`}>My Profile</MenuItem>
+        ) : null}
+      </div>
+      <div>
+        {user ? (
+          <MenuItem onClick={logout}>Logout</MenuItem>
         ) : (
           <>
-          <Menu.Item
-            name='login'
-            onClick={handleItemClick}
-            as={Link}
-            to='/login'
-          />
-          <Menu.Item
-            name='register'
-            active={activeItem === 'register'}
-            onClick={handleItemClick}
-            as={Link}
-            to='/register'
-          />
-        </>
+            <MenuItem to="/login">Login</MenuItem>
+            <MenuItem to="/register">Register</MenuItem>
+          </>
         )}
-      </Menu.Menu>
+      </div>
     </Menu>
   );
-};
+}
 
-export default MenuBar;
+const Menu = styled.div`
+  display: flex;
+  padding: 0;
+  color: #fff;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #00b5ad;
+
+  @media screen and (min-width: 1200px) {
+    padding: 0 4rem;
+  }
+`;
+
+const MenuItem = styled(Link)`
+  font-size: 1.1rem;
+  color: hsla(0, 0%, 100%, 0.9);
+  padding: 1rem 1.1rem;
+
+  &:not(:last-child) {
+    border-right: 1px solid rgba(34, 36, 38, 0.15);
+  }
+`;

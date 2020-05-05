@@ -2,13 +2,14 @@ import React, { useState, useContext } from 'react';
 import { Form, Button, Modal } from 'semantic-ui-react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import styled from 'styled-components';
 
 import { AuthContext } from '../context/auth';
 import { useForm } from '../util/hooks';
 import AvatarSelection from '../components/Register/AvatarSelection';
 
 function Register(props) {
-  const context = useContext(AuthContext)
+  const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
   const [showModal, setShowModal] = useState(false);
 
@@ -19,10 +20,13 @@ function Register(props) {
     confirmPassword: '',
     email: '',
     location: '',
-    avatar: ''
+    avatar: '',
   };
 
-  const { changedInputHandler, submitHandler, values } = useForm(registerUser, initialState)
+  const { changedInputHandler, submitHandler, values } = useForm(
+    registerUser,
+    initialState,
+  );
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     // the second argument in useMutation is an options object,
@@ -30,11 +34,11 @@ function Register(props) {
     // this will trigger if the mutation is successfully exexcuted,
     // the first argument for 'update' is 'proxy' which contains metadata
     // the second argument is the result of the mutation
-    update(proxy, { data: { register: userData }}){
-      context.login(userData)
-      props.history.push('/')
+    update(proxy, { data: { register: userData } }) {
+      context.login(userData);
+      props.history.push('/');
     },
-    onError: (err) => {
+    onError: err => {
       // graphQLErrors will return an array with multiple error objects
       // however our server code only returns one error object
       // therefore we only need to access the graphQLErrors array at index 0
@@ -43,19 +47,23 @@ function Register(props) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
     // the variables property is the object which we will be sending with the mutation
-    variables: values
+    variables: values,
   });
-  
+
   // all functions initialized with 'function' will be hoisted unlike functions
   // initialized with 'const', therefore we can access the addUser() function
   // before initialization
   function registerUser() {
     addUser();
-  };
+  }
 
   return (
-    <div className="form-container">
-      <Form onSubmit={submitHandler} noValidate className={loading ? "loading" : ''}>
+    <Container>
+      <Form
+        onSubmit={submitHandler}
+        noValidate
+        className={loading ? 'loading' : ''}
+      >
         <h1>Create a New Account</h1>
         <Form.Input
           type="text"
@@ -63,7 +71,7 @@ function Register(props) {
           placeholder="Name"
           name="name"
           value={values.name}
-          error={errors.name ? true : false}
+          error={!!errors.name}
           onChange={changedInputHandler}
         />
         <Form.Input
@@ -72,7 +80,7 @@ function Register(props) {
           placeholder="Username"
           name="username"
           value={values.username}
-          error={errors.username ? true : false}
+          error={!!errors.username}
           onChange={changedInputHandler}
         />
         <Form.Input
@@ -81,7 +89,7 @@ function Register(props) {
           placeholder="Email"
           name="email"
           value={values.email}
-          error={errors.email ? true : false}
+          error={!!errors.email}
           onChange={changedInputHandler}
         />
         <Form.Input
@@ -91,7 +99,7 @@ function Register(props) {
           name="password"
           maxLength="16"
           value={values.password}
-          error={errors.password ? true : false}
+          error={!!errors.password}
           onChange={changedInputHandler}
         />
         <Form.Input
@@ -101,7 +109,7 @@ function Register(props) {
           name="confirmPassword"
           maxLength="16"
           value={values.confirmPassword}
-          error={errors.confirmPassword ? true : false}
+          error={!!errors.confirmPassword}
           onChange={changedInputHandler}
         />
         <Form.Input
@@ -110,32 +118,60 @@ function Register(props) {
           placeholder="Anywhere, USA"
           name="location"
           value={values.location}
-          error={errors.location ? true : false}
+          error={!!errors.location}
           onChange={changedInputHandler}
         />
         <Modal open={showModal}>
           <Modal.Header>Select an Avatar</Modal.Header>
           <Modal.Content style={{ display: 'flex', flexWrap: 'wrap' }}>
-            <AvatarSelection checked={values.avatar} changed={changedInputHandler} />
+            <AvatarSelection
+              checked={values.avatar}
+              changed={changedInputHandler}
+            />
           </Modal.Content>
           <Modal.Content>
-            <Button primary onClick={() => setShowModal(false)}>Select</Button>
+            <Button primary onClick={() => setShowModal(false)}>
+              Select
+            </Button>
           </Modal.Content>
         </Modal>
-        <Button type="button" color={errors.avatar ? "red" : "teal"} onClick={() => setShowModal(true)} style={{ display: 'block', margin: '0.5rem 0' }}>Select Avatar</Button>
-        <Button type="submit" primary style={{ margin: '0.5rem 0'}}>Submit</Button>
+        <Button
+          type="button"
+          color={errors.avatar ? 'red' : 'teal'}
+          onClick={() => setShowModal(true)}
+          style={{ display: 'block', margin: '0.5rem 0' }}
+        >
+          Select Avatar
+        </Button>
+        <Button type="submit" primary style={{ margin: '0.5rem 0' }}>
+          Submit
+        </Button>
       </Form>
-        {Object.keys(errors).length > 0 && (
-          <div className="ui error message">
-            <ul className="list">
-              {Object.values(errors).map(value => (
+      {Object.keys(errors).length > 0 && (
+        <div className="ui error message">
+          <ul className="list">
+            {Object.values(errors).map(value => (
               <li key={value}>{value}</li>
-              ))}
-            </ul>
-          </div>)}
-    </div>
-  )
-};
+            ))}
+          </ul>
+        </div>
+      )}
+    </Container>
+  );
+}
+
+const Container = styled.div`
+  width: 400px;
+  margin: 1rem auto;
+
+  @media screen and (max-width: 1000px) {
+    width: 70%;
+  }
+
+  @media screen and (max-width: 650px) {
+    width: 90%;
+  }
+`;
 
 const REGISTER_USER = gql`
   mutation register(
@@ -157,7 +193,7 @@ const REGISTER_USER = gql`
         location: $location
         avatar: $avatar
       }
-    ){
+    ) {
       id
       name
       email

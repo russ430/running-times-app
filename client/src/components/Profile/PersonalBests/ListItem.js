@@ -1,17 +1,16 @@
 import React from 'react';
 import { List } from 'semantic-ui-react';
 
-function listItem({ children, descriptor, label }) {
-
+export default function listItem({ children, descriptor, label }) {
   return (
     <List.Item>
-      <List.Icon size="small" name="trophy" color="yellow"/>
+      <List.Icon size="small" name="trophy" color="yellow" />
       <List.Content>
-        <List.Header>{children} {descriptor && `${descriptor}`}</List.Header>
+        <List.Header>
+          {children} {descriptor && `${descriptor}`}
+        </List.Header>
         <List.Description>{label}</List.Description>
       </List.Content>
     </List.Item>
-  )
-};
-
-export default listItem;
+  );
+}

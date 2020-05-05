@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { Grid, Transition, Card, Item, Loader, Icon } from 'semantic-ui-react';
+import { Transition, Card, Item, Loader, Icon } from 'semantic-ui-react';
+import styled from 'styled-components';
 
-import Register from './Register';
+import WelcomeHeader from '../components/WelcomeHeader';
 import { AuthContext } from '../context/auth';
 import PostForm from '../components/PostForm';
 import { FETCH_POSTS_QUERY } from '../util/graphql';
@@ -22,71 +23,162 @@ function Home() {
 
   return (
     <>
-    <Grid centered columns={2}>
-      {!user && (
-        <header style={{ padding: '2rem 0 6rem 1rem', display: 'flex', textAlign: 'left' }}>
-          <div style={{ width: '45%', margin: '0 auto' }}>
-            <h1 style={{ textAlign: 'center', fontWeight: '400', fontSize: '5rem'}}>We Run Here.</h1>
-            <h2 style={{ textAlign: 'left', fontWeight: '400' }}>Whether you're a lifelong runner or just getting started, welcome to your new home for all things running!</h2>
-            <div style={{ display: 'flex', justifyContent: 'center', width: '90%', margin: '0 auto' }}>
-              <div>
-                <Icon name="clipboard list" size="massive" color="blue" style={{ margin: '2rem 0' }}/>
-                <Icon name="trophy" size="massive" color="yellow" style={{ margin: '2rem 0' }}/>
-              </div>  
-              <div style={{ margin: '0 auto' }}>
-                <div style={{ margin: '3rem 0 0 0' }}>
-                  <h3 style={{ fontSize: '2rem', padding: '0', margin: '0' }}>Stats</h3>
-                  <p style={{ fontSize: '1.2rem', padding: '0', margin: '0.5rem 0 0 0' }}>From total miles to average speed we keep track of all your stats!</p>
-                </div>
-                <div style={{ margin: '5rem 0 0 0' }}>
-                  <h3 style={{ fontSize: '2rem', padding: '0', margin: '0' }}>Personal Bests</h3>
-                  <p style={{ fontSize: '1.2rem', padding: '0', margin: '0.5rem 0 0 0' }}>Everytime you hit a new personal best everyone will see it on your profile!</p>
-                </div>
-              </div>  
-            </div>
-            <h2 style={{ marginTop: '3rem', fontStyle: 'italic', textAlign: 'left', fontWeight: '400' }}>We look forward to meeting you! Scroll down below to see what our community has been up to and click on a username or picture to see their profile!</h2>
-          </div>
-        <div style={{ width: '45%', marginLeft: '0 auto', paddingTop: '2rem' }}>
-          <Register />
-        </div>
-      </header>
-      )}
-      {user && (
-          <Grid.Column width={4}>
-            <Grid.Row>
+      <Container user={user}>
+        <Title className="title">We Run Here.</Title>
+        {!user && (
+          <WelcomeHeader />
+        )}
+        {user && (
+          <LeftColumn>
+            <PostContainer>
               <PostForm onSubmitHandler={() => setRefetchData(true)} />
-            </Grid.Row>
-            <Grid.Row>
-              <Card style={{ marginTop: '2rem' }}>
+            </PostContainer>
+            <StatsContainer>
+              <Card>
                 <Card.Content>
-                  <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>Stats</h2>
-                  <BasicStats username={user.username} refetchData={refetchData}/>
-                  <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>Personal Bests</h2>
-                  <PersonalBests home username={user.username} refetchData={refetchData}/>
+                  <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+                    Stats
+                  </h2>
+                  <BasicStats
+                    username={user.username}
+                    refetchData={refetchData}
+                  />
+                  <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+                    Personal Bests
+                  </h2>
+                  <PersonalBests
+                    home
+                    username={user.username}
+                    refetchData={refetchData}
+                  />
                 </Card.Content>
               </Card>
-            </Grid.Row>
-          </Grid.Column>
+            </StatsContainer>
+          </LeftColumn>
         )}
-        <Grid.Column width={12} style={{ paddingBottom: '6rem' }}>
-          <Grid columns={3}>
-            <Grid.Row className="page-title">
-              <h1>Recent Activity</h1>
-            </Grid.Row>
-            <Grid.Row >
-              {loading ? <Loader style={{ marginTop: '4rem' }} active inline="centered" size="big" /> : (
-                <Transition.Group animation='fade' as={Item.Group} divided duration={200} style={{ width: '95%', margin: '0 auto' }}>
-                  {firstSixTimes.map(time => (
-                    <TimeCard key={time.id} type="home" data={time} />
-                  ))}
-                </Transition.Group>
-              )}
-            </Grid.Row>
-          </Grid>
-        </Grid.Column>
-      </Grid>
+        <RunFeed>
+          <h1 style={{ textAlign: 'center' }}>Recent Activity</h1>
+          {loading ? (
+            <Loader
+              style={{ marginTop: '4rem' }}
+              active
+              inline="centered"
+              size="big"
+            />
+          ) : (
+            <Transition.Group
+              animation="fade"
+              as={Item.Group}
+              divided
+              duration={200}
+              style={{ width: '100%' }}
+            >
+              {firstSixTimes.map(time => (
+                <TimeCard key={time.id} type="home" data={time} />
+              ))}
+            </Transition.Group>
+          )}
+        </RunFeed>
+      </Container>
     </>
-  )
-};
+  );
+}
+
+const Container = styled.div`
+  margin: 0;
+  padding: 1rem 0;
+  display: ${props => (props.user ? 'flex' : null)};
+
+  .title {
+    display: ${props => (props.user ? 'none' : null)};
+  }
+
+  @media screen and (max-width: 730px) {
+    flex-direction: column;
+  }
+`;
+
+
+const Title = styled.h1`
+  font-size: 5rem;
+  font-weight: 400;
+  text-align: center;
+  margin: 1rem 0;
+
+  @media screen and (max-width: 800px) {
+    font-size: 4rem;
+  }
+
+  @media screen and (max-width: 600px) {
+    font-size: 3.5rem;
+  }
+`;
+
+
+
+const LeftColumn = styled.div`
+  padding: 0 0.5rem;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (max-width: 730px) {
+    flex-direction: row-reverse;
+    justify-content: space-around;
+  }
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+`;
+
+const PostContainer = styled.div`
+  padding: 0 1rem;
+
+  @media screen and (max-width: 730px) {
+    margin: 2rem 0;
+    flex: 1;
+  }
+
+  @media screen and (max-width: 600px) {
+    width: 60%;
+  }
+
+  @media screen and (max-width: 550px) {
+    width: 80%;
+  }
+
+  @media screen and (max-width: 410px) {
+    width: 100%;
+  }
+`;
+
+const StatsContainer = styled.div`
+  margin-top: 2rem;
+
+  @media screen and (max-width: 730px) {
+    flex: 1;
+    margin-top: 0;
+  }
+`;
+
+const RunFeed = styled.div`
+  width: 70%;
+  margin: 1rem auto;
+  flex: 3 1 auto;
+
+  @media screen and (max-width: 1100px) {
+    width: 80%;
+  }
+
+  @media screen and (max-width: 900px) {
+    width: 90%;
+  }
+
+  @media screen and (max-width: 700px) {
+    width: 100%;
+  }
+`;
 
 export default Home;

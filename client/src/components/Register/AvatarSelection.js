@@ -1,21 +1,32 @@
 import React from 'react';
 import { Image, Form, Radio } from 'semantic-ui-react';
+import styled from 'styled-components';
+
 import avatars from '../avatars';
 
-function AvatarSelection(props) {
-
+export default function AvatarSelection({ changed, checked }) {
   return (
     <>
       {avatars.map((shoe, index) => (
-        <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
-          <Image size="small" src={shoe} style={{ margin: '0.5rem'}}/>
+        <Container>
+          <Image size="small" src={shoe} style={{ margin: '0.5rem' }} />
           <Form.Field>
-            <Radio name="avatar" value={index.toString()} checked={props.checked === index.toString()} onChange={props.changed}/>
+            <Radio
+              name="avatar"
+              value={index.toString()}
+              checked={checked === index.toString()}
+              onChange={changed}
+            />
           </Form.Field>
-        </div>
+        </Container>
       ))}
-      </>
+    </>
   );
-};
+}
 
-export default AvatarSelection;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 0;
+`;
